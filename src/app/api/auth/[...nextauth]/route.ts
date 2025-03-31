@@ -16,11 +16,15 @@ export const authOptions = {
                         withCredentials: true,
                     });
 
-                    const user = res.data.user;
-                    const token = res.data.token;
+                    const { user, token } = res.data;
 
                     if (user && token) {
-                        return { ...user, token };
+                        return { 
+                            id: user.id, 
+                            name: user.name, 
+                            email: user.email, 
+                            token 
+                        };
                     }
 
                     return null;
@@ -33,19 +37,19 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.id = user.id;
-                token.token = user.token;
+                token.user = user;
+                token.accessToken = user.token; // Store Laravel Sanctum token in session
             }
             return token;
         },
         async session({ session, token }) {
-            session.user.id = token.id;
-            session.token = token.token;
+            session.user = token.user;
+            session.accessToken = token.accessToken; // Attach Laravel token to session
             return session;
-        },
+        }
     },
     session: {
-        strategy: "jwt",
+        strategy: "jwt"
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: { signIn: "/login" },

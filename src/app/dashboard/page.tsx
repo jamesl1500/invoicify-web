@@ -10,7 +10,7 @@ const DashboardPage = () => {
 
     console.log("Session data:", session);
 
-    if (!session?.token) {
+    if (!session?.accessToken) {
         return (
             <div>
                 <h1>Access Denied</h1>
@@ -21,9 +21,10 @@ const DashboardPage = () => {
 
     const handleLogout = async () => {
         try {
-            const token = session.token;
-    
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {}, {
+            const token = session.accessToken;
+
+            // Perform logout request
+            await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/debug-token`, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`,
