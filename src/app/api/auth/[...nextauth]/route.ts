@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import { signOut } from "next-auth/react";
 
 export const authOptions = {
     providers: [
@@ -40,12 +41,37 @@ export const authOptions = {
                 token.user = user;
                 token.accessToken = user.token; // Store Laravel Sanctum token in session
             }
+
+            // Validate the token
+            try{
+                await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/validate-token`, {
+                    headers: {
+                        Authorization: `Bearer ${token.accessToken}`,
+                    },
+                });
+            }catch (error) {
+                token.accessToken = null; // Invalidate the token if an error occurs
+                token.user = null; // Invalidate the user
+            }
             return token;
         },
         async session({ session, token }) {
             session.user = token.user;
             session.accessToken = token.accessToken; // Attach Laravel token to session
             return session;
+        }
+    },
+    events: {
+        async signOut({ token }) {
+            try {
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token.accessToken}`,
+                    },
+                });
+            } catch (error) {
+                console.error("Error during sign out:", error);
+            }
         }
     },
     session: {
