@@ -13,6 +13,7 @@ export default function Header() {
     const pageName: Record<string, string | { title: string; subtitle: string }> = {
         "/dashboard": "Dashboard",
         "/invoices": "Invoices",
+        "/invoices/create": { title: "Create Invoice", subtitle: "Create a new invoice" },
         "/clients": "Clients",
         "/settings": "Settings",
         "/billing": "Billing",
