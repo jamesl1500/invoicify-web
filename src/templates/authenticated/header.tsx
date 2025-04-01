@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { faHome, faFileInvoice, faCog, faMoneyBill, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFileInvoice, faCog, faMoneyBill, faUser, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -13,8 +13,9 @@ export default function Header() {
     const pageName: Record<string, string | { title: string; subtitle: string }> = {
         "/dashboard": "Dashboard",
         "/invoices": "Invoices",
-        "/invoices/create": { title: "Create Invoice", subtitle: "Create a new invoice" },
+        "/invoices/create": { title: "Invoices", subtitle: "New invoice" },
         "/clients": "Clients",
+        "/clients/create": { title: "Clients", subtitle: "New client" },
         "/settings": "Settings",
         "/billing": "Billing",
         "/create-invoice": "Create Invoice",
@@ -26,9 +27,10 @@ export default function Header() {
         "/dashboard": faHome,
         "/invoices": faFileInvoice,
         "/clients": faUser,
+        "/clients/create": faUser,
         "/settings": faCog,
         "/billing": faMoneyBill,
-        "/create-invoice": faFileInvoice,
+        "/invoices/create": faFileInvoice,
         "/profile": faUser,
     };
 
@@ -56,14 +58,14 @@ export default function Header() {
 
     return (
         <header className="header">
-            <div className="header-inner">
+            <div className="header-inner container-fluid">
                 <div className="header-page-location">
                     <div className="header-page-icon">
                         <FontAwesomeIcon icon={pageIconComponent} />
                     </div>
                     <div className="header-page-name">
                         {pageTitle()} 
-                        {pageSubtitle() && <span className="header-page-subtitle">{pageSubtitle()}</span>}
+                        {pageSubtitle() && <span className="header-page-subtitle"> <span className="header-page-subtitle-arrow">|</span> {pageSubtitle()}</span>}
                     </div>
                 </div>
                 <div className="header-right">

@@ -1,6 +1,8 @@
 "use client";
 
 import React from 'react';
+import axios from 'axios';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faHome, faFileInvoice, faUser, faCog, faXmark, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +14,9 @@ import { usePathname } from 'next/navigation';
 
 // Import images 
 const logo = "/static/images/invoicify-logo.png";
+
+// Logout
+
 
 export default function Sidebar() {
 
@@ -32,7 +37,7 @@ export default function Sidebar() {
                     </div>
                 </div>
                 <div className="sidebar-action">
-                    <Link href="/create-invoice" className="btn btn-primary btn-fullwidth">
+                    <Link href="/invoices/create" className="btn btn-primary btn-fullwidth">
                         <FontAwesomeIcon icon={faFileInvoice} />
                         Create Invoice
                     </Link>
