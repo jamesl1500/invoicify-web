@@ -64,7 +64,24 @@ export default function CreateClientPage() {
             } 
         } catch (error) {
             // Handle network or server error
-            console.error("Network error:", error);
+            toast.error("An error occurred while creating the client.");
+            
+            // Check if the error is a validation error
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 422) {
+                    const validationErrors = error.response.data.errors;
+                    for (const field in validationErrors) {
+                        setError(field as keyof ClientFormData, {
+                            type: "manual",
+                            message: validationErrors[field][0],
+                        });
+                    }
+                } else if (error.response?.status === 401) {
+                    toast.error("Unauthorized. Please log in again.");
+                } else {
+                    toast.error("An unexpected error occurred.");
+                }
+            }
         }
     };
 
@@ -99,13 +116,15 @@ export default function CreateClientPage() {
                                 {/* Client Name */}
                                 <div className="form-group">
                                     <label htmlFor="client-name">Client Name</label>
-                                    <input type="text" id="client-name" className="form-control" placeholder="Enter client name" />
+                                    <input type="text" {...register("name")} id="client-name" className="form-control" placeholder="Enter client name" />
+                                    {errors.name && <span className="text-danger">{errors.name.message}</span>} 
                                 </div>
 
                                 {/* Client Email */}
                                 <div className="form-group">
                                     <label htmlFor="client-email">Client Email</label>
-                                    <input type="email" id="client-email" className="form-control" placeholder="Enter client email" />
+                                    <input type="email" {...register('email')} id="client-email" className="form-control" placeholder="Enter client email" />
+                                    {errors.email && <span className="text-danger">{errors.email.message}</span>}
                                 </div>
 
                                 {/* Client Phone */}
