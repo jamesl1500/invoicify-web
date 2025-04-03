@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
+import Loading from "@/components/screens/Loading";
+
 const fetchClients = async (token: string) => {
     const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/clients`,
@@ -20,6 +22,8 @@ const fetchClients = async (token: string) => {
 
     if (response.status === 200) {
         return response.data;
+    } else if (response.status === 404) {
+        return { data: [] }; // Return an empty array if no clients are found
     } else {
         throw new Error("Failed to fetch clients");
     }
@@ -35,11 +39,7 @@ export default function ClientsPage() {
     }) as { data: { id: string; name: string }[] | undefined, error: any, isLoading: boolean };
 
     if (status === "loading" || isLoading) {
-        return <div>Loading clients...</div>;
-    }
-
-    if (error) {
-        return <div>Error fetching clients: {error.message}</div>;
+        return <Loading text="Loading your clients"/>;
     }
     
     return (
@@ -58,6 +58,24 @@ export default function ClientsPage() {
                 </div>
                 <div className="page-content">
                     <div className="page-content-inner">
+                        {error && (
+                            <div className="alert alert-danger">
+                                {error?.response?.status === 401 ? (
+                                    <div>
+                                        Unauthorized. Please log in again.
+                                    </div>
+                                ) : error?.response?.status === 403 ? (
+                                    <div>
+                                        Forbidden. You do not have permission to view this resource.
+                                    </div>
+                                ) : (
+                                    <div>
+                                        Error fetching clients: {error.message}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
                         {data?.clients.length === 0 && (
                             <div className="alert alert-info">
                                 No clients found. Please create a new client.

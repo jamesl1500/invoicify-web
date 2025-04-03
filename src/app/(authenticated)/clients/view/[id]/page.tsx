@@ -7,6 +7,8 @@ import axios from "axios";
 
 import Link from "next/link";
 
+import Loading from "@/components/screens/Loading";
+
 const fetchClient = async (clientId: string, token: string) => {
     const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/clients/${clientId}`,
@@ -36,7 +38,7 @@ export default function ClientViewPage({ params }: { params: { id: string } }) {
     }) as { data: Client | undefined; error: any; isLoading: boolean };
 
     if (isLoading) {
-        return <div>Loading client...</div>;
+        return <Loading text="Loading your client"/>;
     }
 
     if (error) {

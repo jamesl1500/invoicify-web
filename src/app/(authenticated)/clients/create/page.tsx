@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Metadata } from "next";
 import { useSession } from "next-auth/react";
@@ -28,8 +29,10 @@ export default function CreateClientPage() {
         formState: { errors, isSubmitting },
     } = useForm<ClientFormData>({ resolver: zodResolver(clientSchema) });
 
+    const [submitting, setSubmitting] = useState(false);
+
     const submitForm = async (formData: ClientFormData) => {
-        isSubmitting(true);
+        setSubmitting(true);
 
         try {
             const response = await axios.post(
@@ -43,11 +46,9 @@ export default function CreateClientPage() {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 toast.success("Client created successfully!");
-
-                // Redirect or perform additional actions
-                isSubmitting(false);
+                setSubmitting(false);
 
                 // Example: Redirect to the clients list page
                 window.location.href = "/clients";
@@ -76,8 +77,10 @@ export default function CreateClientPage() {
         <div className="page page-create-client">
             <div className="page-inner">
                 <div className="page-header">
-                    <h1>Create Client</h1>
-                    <p>Create a new client for your invoices</p>
+                    <div className="page-header-title">
+                        <h1>Create Client</h1>
+                        <p>Create a new client for your invoices</p>
+                    </div>
                 </div>
                 <div className="page-content">
                     <form onSubmit={handleSubmit(submitForm)}>
@@ -132,11 +135,10 @@ export default function CreateClientPage() {
                             />
                             {errors.address && <span className="text-danger">{errors.address.message}</span>}
                         </div>
-
                         {/* Submit Button */}
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                                {isSubmitting ? "Creating..." : "Create Client"}
+                            <button type="submit" className="btn btn-primary" disabled={submitting}>
+                                {submitting ? "Creating..." : "Create Client"}
                             </button>
                             <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
                                 Cancel

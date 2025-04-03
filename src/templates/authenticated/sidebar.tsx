@@ -66,7 +66,7 @@ export default function Sidebar() {
                         <li>
                             <Link href="/payments">
                                 <FontAwesomeIcon icon={faMoneyBill} />
-                                Payment
+                                Payments
                             </Link>
                         </li>
                     </ul>
