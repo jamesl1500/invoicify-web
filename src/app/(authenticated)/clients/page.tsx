@@ -1,0 +1,98 @@
+"use client";
+
+import React from "react";
+import axios from "axios";
+
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+
+const fetchClients = async (token: string) => {
+    const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/clients`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (response.status === 200) {
+        return response.data;
+    } else {
+        throw new Error("Failed to fetch clients");
+    }
+};
+
+export default function ClientsPage() {
+    const { data: session, status } = useSession();
+
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["clients"],
+        queryFn: () => fetchClients(session?.accessToken || ""),
+        enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
+    }) as { data: { id: string; name: string }[] | undefined, error: any, isLoading: boolean };
+
+    if (status === "loading" || isLoading) {
+        return <div>Loading clients...</div>;
+    }
+
+    if (error) {
+        return <div>Error fetching clients: {error.message}</div>;
+    }
+    
+    return (
+        <div className="page page-clients">
+            <div className="page-inner">
+                <div className="page-header">
+                    <div className="page-header-title">
+                        <h1>Clients</h1>
+                        <p>View your clients</p>
+                    </div>
+                    <div className="page-header-actions">
+                        <Link href="/clients/create" className="btn btn-primary">
+                            Create Client
+                        </Link>
+                    </div>
+                </div>
+                <div className="page-content">
+                    <div className="page-content-inner">
+                        {data?.clients.length === 0 && (
+                            <div className="alert alert-info">
+                                No clients found. Please create a new client.
+                            </div>
+                        )}
+
+                        {data?.clients.length > 0 && (
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.clients.map((client: { id: string; name: string, email: string, phone: string }) => (
+                                        <tr key={client.id}>
+                                            <td>{client.name}</td>
+                                            <td>{client.email}</td>
+                                            <td>{client.phone}</td>
+                                            <td>
+                                                <Link href={`/clients/view/${client.id}`} className="btn btn-sm btn-primary">
+                                                    View
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

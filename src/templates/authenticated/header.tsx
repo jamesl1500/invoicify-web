@@ -16,6 +16,8 @@ export default function Header() {
         "/invoices/create": { title: "Invoices", subtitle: "New invoice" },
         "/clients": "Clients",
         "/clients/create": { title: "Clients", subtitle: "New client" },
+        "/clients/view/[id]": { title: "Clients", subtitle: "View client" },
+        "/clients/edit/[id]": { title: "Clients", subtitle: "Edit client" },
         "/settings": "Settings",
         "/billing": "Billing",
         "/create-invoice": "Create Invoice",
