@@ -162,7 +162,7 @@ export default function CreateInvoicePage() {
                             <form onSubmit={handleSubmit}>
                                 {/* Client selection dropdown */}
                                 <div className="form-group">
-                                    {clients?.clients.length === 0 ? (
+                                    {clients?.length === 0 ? (
                                         <p>No clients found. Please create a client first.</p>
                                     ) : (
                                         <>

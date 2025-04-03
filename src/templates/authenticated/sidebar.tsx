@@ -46,7 +46,7 @@ export default function Sidebar() {
                     <h3>Menu</h3>
                     <ul>
                         <li>
-                            <Link href="/">
+                            <Link href="/dashboard">
                                 <FontAwesomeIcon icon={faHome} />
                                 Dashboard
                             </Link>
