@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const fetchClients = async (token: string) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients`, {
@@ -53,22 +54,9 @@ export default function CreateInvoicePage() {
         const invoiceDate = invoiceData.get("invoice-date");
         const dueDate = invoiceData.get("due-date");
 
-        console.log("Invoice Data", {
-            clientId,
-            invoiceNumber,
-            invoiceDate,
-            dueDate,
-            items: invoiceItems,
-            taxRate,
-            subtotal,
-            tax,
-            total, 
-        });
-
         // Create the invoice
-        const response = axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/invoices`,
-            {
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, {
                 clientId,
                 invoiceNumber,
                 invoiceDate,
@@ -78,21 +66,25 @@ export default function CreateInvoicePage() {
                 subtotal,
                 tax,
                 total,
-            },
-            {
+            }, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${session?.accessToken}`,
                 },
-            }
-        );
+            });
 
-        if (response.status === 201 || response.status === 200) {
-            alert("Invoice created successfully!");
-            // Redirect to the invoice page
-            window.location.href = "/invoices";
-        } else {
-            alert("Failed to create invoice");
+            if (response.status === 201) {
+                // Use toastify
+                toast.success("Invoice created successfully!");
+
+                // Redirect to the invoice view page
+                window.location.href = `/invoices/view/${response.data.invoice.id}`;
+            } else {
+                toast.error("An error occurred while creating the invoice.");
+            }
+        } catch (error) {
+            toast.error("An error occurred while creating the invoice.");
+            console.error("Error creating invoice:", error);
         }
     };
 

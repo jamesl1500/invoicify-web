@@ -10,13 +10,14 @@
 @use '~bootstrap/scss/bootstrap';
 
 // Variables
-$background-color: #f9f9f9;
+$background-color: #eee;
 
 $base-black: #000;
 $base-white: #ffffff;
 $base-gray: #6c757d;
 
-$primary-color: #8e44ad;
+$primary-color: #17332d;
+$secondary-color: #6c757d;
 
 $box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
@@ -318,7 +319,7 @@ body{
                     width: 55px;
                     height: 45px;
                     border-radius: 50%;
-                    background-color: $base-black;
+                    background-color: $primary-color;
                     box-shadow: $box-shadow;
 
                     display: flex;
@@ -338,8 +339,6 @@ body{
 
 // Sidebar
 .sidebar-holder{
-    padding: 10px;
-
     position: fixed;
     top: 0;
     left: 0;
@@ -350,9 +349,7 @@ body{
     .sidebar{
         height: 100%;
 
-        background-color: $base-black;
-        box-shadow: $box-shadow;
-        border-radius: $border-radius-lg;
+        background-color: #17332d;
 
         .sidebar-inner{
             padding: 20px;
@@ -373,6 +370,7 @@ body{
 
                         img{
                             border-radius: 50%;
+                            box-shadow: $box-shadow;
                         }
 
                         h1{
@@ -403,6 +401,12 @@ body{
 
             .sidebar-action{
                 padding-top: 20px;
+
+                .btn{
+                    background: #fff;
+                    box-shadow: $box-shadow;
+                    color: $base-black;
+                }
             }
 
             .sidebar-content{
@@ -443,8 +447,8 @@ body{
                         }
 
                         &:hover, .active{
-                            background: $primary-color;
-                            
+                            background: lighten($primary-color, 10%);
+                            box-shadow: $box-shadow;
 
                             a{
                                 color: $base-white;
@@ -531,6 +535,7 @@ Tables
 
     td{
         align-items: center;
+        border: 1px solid darken($base-white, 10%);
     }
 
     th{

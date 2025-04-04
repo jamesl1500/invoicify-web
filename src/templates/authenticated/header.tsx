@@ -22,8 +22,7 @@ export default function Header() {
         "/billing": "Billing",
         "/create-invoice": "Create Invoice",
         "/profile": "Profile",
-        "/invoice/[id]": { title: "Invoice", subtitle: "View Invoice" },
-        "/client/[id]": { title: "Client", subtitle: "View Client" },
+        "/invoice/view": { title: "Invoice", subtitle: "View Invoice" },
     };
     const pageIcon: Record<string, IconDefinition> = {
         "/dashboard": faHome,
