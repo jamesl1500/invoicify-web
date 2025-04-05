@@ -191,7 +191,8 @@ body{
 
     label{
         font-size: $font-size-base;
-        font-weight: $font-weight-normal;
+        font-weight: $font-weight-bold;
+        margin-bottom: 10px;
 
         color: $base-black;
     }
@@ -231,7 +232,7 @@ body{
 
 // Website
 .website{
-    margin-left: 300px;
+    margin-left: 250px;
     width: 100%;
 
     .website-content{
@@ -343,7 +344,7 @@ body{
     top: 0;
     left: 0;
 
-    width: 300px;
+    width: 250px;
     height: 100vh;
 
     .sidebar{
@@ -454,6 +455,16 @@ body{
                                 color: $base-white;
                                 text-decoration: none;
                             }
+                        }
+                    }
+
+                    li.active{
+                        background: lighten($primary-color, 10%);
+                        box-shadow: $box-shadow;
+
+                        a{
+                            color: $base-white;
+                            text-decoration: none;
                         }
                     }
                 }
@@ -611,6 +622,86 @@ Tables
                 
 
             }
+        }
+    }
+}
+
+// Page: Dashboard
+.page-dashboard{
+
+    .page-inner{
+
+        .page-content{
+            border: none;
+            padding: 0px;
+
+            .page-content-kpis{
+                display: flex;
+                gap: 20px;
+
+                border-bottom: 1px solid #eee;
+                margin-bottom: 20px;
+
+                .page-content-kpi{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    background-color: $base-white;
+                    box-shadow: $box-shadow;
+                    border-radius: $border-radius-lg;
+
+                    padding: 20px;
+
+                    margin-bottom: 20px;
+
+                    .page-content-kpi-icon{
+                        width: 60px;
+                        height: 50px;
+                        margin-right: 20px;
+
+                        svg{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .page-content-kpi-title{
+                        font-size: $font-size-lg;
+                        font-weight: $font-weight-thin;
+
+                        color: $base-black;
+                        text-transform: uppercase;
+                        letter-spacing: 3px;
+                    }
+
+                    .page-content-kpi-value{
+                        font-size: $font-size-xl;
+                        font-weight: $font-weight-bold;
+
+                        color: $base-black;
+                    }
+                }
+
+                .page-content-kpi.primary{
+                    background-color: $primary-color;
+                    color: $base-white;
+
+                    .page-content-kpi-icon{
+                        background-color: $base-white;
+                        border-radius: 50%;
+                        padding: 10px;
+                        box-shadow: $box-shadow;
+                        color: $base-black;
+                    }
+
+                    .page-content-kpi-title, .page-content-kpi-value{
+                        color: $base-white;
+                    }
+                }
+            }
+
+
         }
     }
 }

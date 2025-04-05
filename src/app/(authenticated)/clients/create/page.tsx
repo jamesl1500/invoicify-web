@@ -100,6 +100,7 @@ export default function CreateClientPage() {
                         {/* Client Email */}
                         <div className="form-group">
                             <label htmlFor="client-email">Client Email</label>
+                            <p>We will send a email to your client with a link to onboard to your portal.</p>
                             <input
                                 type="email"
                                 {...register("email")}

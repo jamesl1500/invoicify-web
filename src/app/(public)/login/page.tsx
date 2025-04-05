@@ -10,7 +10,7 @@ export default function LoginPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const res = await signIn("credentials", { email, password, redirect: false });
+        const res = await signIn("user-login", { email, password, redirect: false });
 
         if (!res?.error) router.push("/dashboard");
     };

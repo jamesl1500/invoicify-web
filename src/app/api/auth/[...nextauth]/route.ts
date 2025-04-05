@@ -6,7 +6,8 @@ import { signOut } from "next-auth/react";
 export const authOptions = {
     providers: [
         CredentialsProvider({
-            name: "Credentials",
+            id: "user-login",
+            name: "User Login",
             credentials: {
                 email: { label: "Email", type: "email", required: true },
                 password: { label: "Password", type: "password", required: true },
@@ -24,6 +25,7 @@ export const authOptions = {
                             id: user.id, 
                             name: user.name, 
                             email: user.email, 
+                            role: "user",
                             token 
                         };
                     }
@@ -34,12 +36,46 @@ export const authOptions = {
                 }
             },
         }),
-    ],
+        CredentialsProvider({
+            id: "client-login",
+            name: "Client",
+            credentials: {
+                email: { label: "Email", type: "email", required: true },
+                password: { label: "Password", type: "password", required: true },
+            },
+            async authorize(credentials) {
+                try {
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/client/login`, credentials, {
+                        withCredentials: true,
+                    });
+
+                    console.log(res.data);
+
+                    const { client, token } = res.data;
+
+                    if (client && token) {
+                        return { 
+                            id: client.id, 
+                            name: client.name, 
+                            email: client.email, 
+                            role: "client",
+                            token 
+                        };
+                    }
+
+                    return null;
+                } catch (error) {
+                    throw new Error("Invalid credentials", error);
+                }
+            }
+        }),
+    ],      
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
                 token.user = user;
                 token.accessToken = user.token; // Store Laravel Sanctum token in session
+                token.role = user.role; // Store user role
             }
 
             // Validate the token
@@ -58,6 +94,7 @@ export const authOptions = {
         async session({ session, token }) {
             session.user = token.user;
             session.accessToken = token.accessToken; // Attach Laravel token to session
+            session.role = token.user.role; // Attach user role to session
             return session;
         }
     },
@@ -78,7 +115,7 @@ export const authOptions = {
         strategy: "jwt"
     },
     secret: process.env.NEXTAUTH_SECRET,
-    pages: { signIn: "/login" },
+    pages: { signIn: "/login", clientSignIn: "/client/login" },
 };
 
 const handler = NextAuth(authOptions);

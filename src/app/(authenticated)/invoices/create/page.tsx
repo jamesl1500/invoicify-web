@@ -53,6 +53,9 @@ export default function CreateInvoicePage() {
         const invoiceNumber = invoiceData.get("invoice-number");
         const invoiceDate = invoiceData.get("invoice-date");
         const dueDate = invoiceData.get("due-date");
+        const taxRate = invoiceData.get("tax-rate");
+        const notes = invoiceData.get("notes");
+        const terms = invoiceData.get("terms");
 
         // Create the invoice
         try {
@@ -64,6 +67,8 @@ export default function CreateInvoicePage() {
                 items: invoiceItems,
                 taxRate,
                 subtotal,
+                notes,
+                terms,
                 tax,
                 total,
             }, {
@@ -232,26 +237,43 @@ export default function CreateInvoicePage() {
                                     </button>
                                 </div>
 
+                                <div className="form-group-inline">
+                                    {/* Notes */}
+                                    <div className="form-group">
+                                        <label htmlFor="notes">Notes</label>
+                                        <textarea id="notes" name="notes" className="form-control" placeholder="Add any notes here" rows={4}></textarea>
+                                    </div>
+
+                                    {/* Terms */}
+                                    <div className="form-group">
+                                        <label htmlFor="terms">Terms</label>
+                                        <textarea id="terms" name="terms" className="form-control" placeholder="Add any terms here" rows={4}></textarea>
+                                    </div>
+                                </div>
+
                                 <div className="form-group">
                                     <label htmlFor="tax-rate">Tax Rate (%)</label>
-                                    <input type="number" id="tax-rate" className="form-control" value={taxRate} onChange={(e) => setTaxRate(Number(e.target.value))} />
+                                    <input type="number" name="tax-rate" id="tax-rate" className="form-control" value={taxRate} onChange={(e) => setTaxRate(Number(e.target.value))} />
+                                </div>
+                                
+                                <div className="form-group-inline">
+                                    <div className="form-group">
+                                        <label htmlFor="subtotal">Subtotal</label>
+                                        <input type="text" id="subtotal" className="form-control" value={`$${subtotal.toFixed(2)}`} readOnly />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="tax">Tax</label>
+                                        <input type="text" id="tax" className="form-control" value={`$${tax.toFixed(2)}`} readOnly />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="total">Total</label>
+                                        <input type="text" id="total" className="form-control" value={`$${total.toFixed(2)}`} readOnly />
+                                    </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="subtotal">Subtotal</label>
-                                    <input type="text" id="subtotal" className="form-control" value={`$${subtotal.toFixed(2)}`} readOnly />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="tax">Tax</label>
-                                    <input type="text" id="tax" className="form-control" value={`$${tax.toFixed(2)}`} readOnly />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="total">Total</label>
-                                    <input type="text" id="total" className="form-control" value={`$${total.toFixed(2)}`} readOnly />
-                                </div>
-
+                                {/* Submit Button */}
                                 <div className="form-group">
                                     <button type="submit" className="btn btn-primary">
                                         Create Invoice
