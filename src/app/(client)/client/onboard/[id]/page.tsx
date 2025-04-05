@@ -89,7 +89,7 @@ export default function ClientOnboardPage({ params }: { params: { id: string } }
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 // Handle successful onboarding
                 alert("Client onboarded successfully!");
             } else {

@@ -31,7 +31,7 @@ export default function SignupPage() {
 
         // If the signup is successful, sign in the user
         if (res.data.user) {
-            const login = await signIn("credentials", {
+            const login = await signIn("user-login", {
                 email,
                 password,
                 redirect: false,

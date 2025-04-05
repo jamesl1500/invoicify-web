@@ -6,9 +6,11 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+import Link from "next/link";
+
 import Loading from "@/components/screens/Loading";
 
-export default function ViewInvoicePage({ params }: { params: { id: string } }) {
+export default function PayInvoicePage({ params }: { params: { id: string } }) {
     const { data: session } = useSession();
 
     const invoiceId = params.id;
@@ -32,6 +34,32 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
         }
     };
 
+    const openTab = (event: React.MouseEvent<HTMLAnchorElement>, tabId: string) => {
+        event.preventDefault();
+        const tabContent = document.querySelectorAll(".tab-pane");
+        tabContent.forEach((tab) => {
+            (tab as HTMLElement).classList.remove("show", "active");
+        });
+        const activeTab = document.getElementById(tabId);
+
+        if (activeTab) {
+            (activeTab as HTMLElement).classList.add("show", "active");
+        }
+
+        // Remove active class from all tabs
+        const navLinks = document.querySelectorAll(".nav-item");
+        navLinks.forEach((link) => {
+            (link as HTMLElement).classList.remove("active");
+        });
+
+        // Add active class to the clicked tab
+        const clickedLink = event.currentTarget;
+
+        if (clickedLink) {
+            clickedLink.parentElement.classList.add("active");
+        }
+    };
+
     // Fetch the invoice data using the invoiceId
     const { data, error, isLoading } = useQuery({
         queryKey: ["invoice", invoiceId],
@@ -49,8 +77,13 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
             <div className="page-inner">
                 <div className="page-header">
                     <div className="page-header-title">
-                        <h1>Invoice</h1>
-                        <p>View your invoice</p>
+                        <h1>Pay Invoice</h1>
+                        <p>Pay your invoice</p>
+                    </div>
+                    <div className="page-header-actions">
+                        <Link href="/client/invoices" className="btn btn-secondary">
+                            Back to Invoices
+                        </Link>
                     </div>
                 </div>
                 <div className="page-content">
@@ -59,30 +92,10 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                             <div className="invoice-details">
                                 <h2>Invoice #{data.invoice.invoice_number}</h2>
                                 <p><strong>Date:</strong> {new Date(data.invoice.issue_date).toLocaleDateString()}</p>
-                                <p><strong>Customer:</strong> {data.client.name}</p>
                                 <p><strong>Total Amount:</strong> ${data.invoice.total_amount}</p>
-                                <p><strong>Status:</strong> {data.invoice.status}</p>
-                                <h3>Items</h3>
-                                <table className="invoice-items table">
-                                    <thead>
-                                        <tr>
-                                            <th>Description</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data.items.map((item) => (
-                                            <tr key={item.id}>
-                                                <td>{item.description}</td>
-                                                <td>{item.quantity}</td>
-                                                <td>${item.unit_price}</td>
-                                                <td>${(item.quantity * item.unit_price)}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                <div className="payment-options">
+                                    
+                                </div>
                             </div>
                         ) : (
                             <p>Unable to load invoice details.</p>

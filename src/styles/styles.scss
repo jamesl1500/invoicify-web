@@ -705,3 +705,73 @@ Tables
         }
     }
 }
+
+// Page: Invoices
+.page-invoice{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+
+                .invoice-details{
+
+                    .invoice-tabs{
+                        
+                        ul{
+                            padding-bottom: 20px;
+                            padding-left: 0px;
+                            margin: 0px;
+                            border-bottom: 1px solid #eee;
+
+                            li{
+                                display: inline-block;
+                                margin-right: 15px;
+                                list-style: none;
+                                font-size: $font-size-base;
+                                font-weight: $font-weight-normal;
+                                cursor: pointer;
+                                padding: 10px 15px;
+                                background-color: $base-white;
+
+                                a{
+                                    color: $base-black;
+                                }
+
+                                &:hover, &:focus{
+                                    background-color: $primary-color;
+                                    color: $base-white;
+                                    border-radius: $border-radius;
+
+                                    a{
+                                        color: $base-white;
+                                        text-decoration: none;
+                                    }
+                                }
+                            }
+
+                            li.active{
+                                background-color: $primary-color;
+                                color: $base-white;
+                                border-radius: $border-radius;
+
+                                a{
+                                    color: $base-white;
+                                    text-decoration: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .tab-content{
+
+                        .tab-pane{
+                            margin-top: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -148,24 +148,43 @@ export default function Sidebar() {
                 <div className="sidebar-footer">
                     <h3>Account</h3>
                     <ul>
-                        <li>
-                            <Link href="/profile">
-                                <FontAwesomeIcon icon={faUser} />
-                                Profile
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/settings">
-                                <FontAwesomeIcon icon={faCog} />
-                                Settings
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/logout" onClick={handleLogout}>
-                                <FontAwesomeIcon icon={faXmark} />
-                                Logout
-                            </Link>
-                        </li>
+                        {session.user.role === "user" ? (
+                            <>
+                                <li>
+                                    <Link href="/profile">
+                                        <FontAwesomeIcon icon={faUser} />
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/settings">
+                                        <FontAwesomeIcon icon={faCog} />
+                                        Settings
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/logout" onClick={handleLogout}>
+                                        <FontAwesomeIcon icon={faXmark} />
+                                        Logout
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link href="/client/settings">
+                                        <FontAwesomeIcon icon={faUser} />
+                                        Settings
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/logout" onClick={handleLogout}>
+                                        <FontAwesomeIcon icon={faXmark} />
+                                        Logout
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
