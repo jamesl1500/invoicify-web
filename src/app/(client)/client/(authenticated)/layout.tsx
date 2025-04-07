@@ -30,7 +30,7 @@ export default function ClientLayout({
                         </div>
 
                         {/* This is the main content area */}
-                        <div className="website">
+                        <div className="website sidebar-closed">
 
                             <div className="header-holder">
                             {/* This is the header component */}

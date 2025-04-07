@@ -64,7 +64,7 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="sidebar">
+        <aside className="sidebar closed">
             <div className="sidebar-inner">
                 <div className="sidebar-header">
                     <div className="sidebar-branding">
@@ -97,7 +97,7 @@ export default function Sidebar() {
                                         <li className={pathname === "/dashboard" ? "active" : ""}>
                                             <Link href="/dashboard">
                                                 <FontAwesomeIcon icon={faHome} />
-                                                Dashboard
+                                                <span>Dashboard</span>
                                             </Link>
                                         </li>
                                         <li>
@@ -124,19 +124,19 @@ export default function Sidebar() {
                                         <li className={pathname === "/dashboard" ? "active" : ""}>
                                             <Link href="/client/dashboard">
                                                 <FontAwesomeIcon icon={faHome} />
-                                                Dashboard
+                                                <span>Dashboard</span>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href="/client/invoices">
                                                 <FontAwesomeIcon icon={faFileInvoice} />
-                                                My Invoices
+                                                <span>My Invoices</span>
                                             </Link>
                                         </li>
                                         <li>
                                             <Link href="/client/payments">
                                                 <FontAwesomeIcon icon={faMoneyBill} />
-                                                My Payments
+                                                <span>My Payments</span>
                                             </Link>
                                         </li>
                                     </>
@@ -148,24 +148,24 @@ export default function Sidebar() {
                 <div className="sidebar-footer">
                     <h3>Account</h3>
                     <ul>
-                        {session.user.role === "user" ? (
+                        {session?.user.role === "user" ? (
                             <>
                                 <li>
                                     <Link href="/profile">
                                         <FontAwesomeIcon icon={faUser} />
-                                        Profile
+                                        <span>Profile</span>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/settings">
                                         <FontAwesomeIcon icon={faCog} />
-                                        Settings
+                                        <span>Settings</span>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/logout" onClick={handleLogout}>
                                         <FontAwesomeIcon icon={faXmark} />
-                                        Logout
+                                        <span>Logout</span>
                                     </Link>
                                 </li>
                             </>
@@ -174,13 +174,13 @@ export default function Sidebar() {
                                 <li>
                                     <Link href="/client/settings">
                                         <FontAwesomeIcon icon={faUser} />
-                                        Settings
+                                        <span>Settings</span>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/logout" onClick={handleLogout}>
                                         <FontAwesomeIcon icon={faXmark} />
-                                        Logout
+                                        <span>Logout</span>
                                     </Link>
                                 </li>
                             </>

@@ -240,6 +240,10 @@ body{
     }
 }
 
+.website.sidebar-closed{
+    margin-left: 75px;
+}
+
 // Header
 .header-holder{
     width: 100%;
@@ -521,6 +525,190 @@ body{
             }
         }
     }
+
+    .sidebar.closed{
+        width: 75px;
+
+        overflow: hidden;
+
+        .sidebar-inner{
+            padding: 10px;
+
+            .sidebar-header{
+                display: flex;
+                align-items: center;
+                justify-content:center;
+
+                .sidebar-branding{
+
+                    a{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        text-decoration: none;
+
+                        img{
+                            border-radius: 50%;
+                            box-shadow: $box-shadow;
+                        }
+
+                        h1{
+                            display: none;
+                        }
+                    }
+                }
+
+                .sidebar-user{
+                    display: none;
+
+                    a{
+                        color: $base-white;
+                        text-decoration: none;
+                        font-size: $font-size-base;
+                    }
+                }
+            }
+
+            .sidebar-action{
+                padding-top: 20px;
+
+                .btn{
+                    background: #fff;
+                    box-shadow: $box-shadow;
+                    color: $base-black;
+                }
+            }
+            .sidebar-content{
+                margin-top: 20px;
+
+                h3{
+                    font-size: $font-size-base;
+                    font-weight: $font-weight-thin;
+
+                    color: $base-white;
+
+                    letter-spacing: 3px;
+                    text-transform: uppercase;
+
+                    text-align: center;
+                }
+
+                ul{
+                    margin: 0px;
+                    padding: 0px;
+
+                    li{
+                        list-style: none;
+                        margin-top: 10px;
+
+                        border-radius: $border-radius;
+                        padding: 10px;
+
+                        display: flex;
+                        justify-content: center;
+
+                        a{
+                            color: $base-white;
+                            text-decoration: none;
+                            font-size: $font-size-base;
+
+                            text-align: center;
+
+                            span{
+                                display: none;
+                            }
+
+                            svg{
+                                margin: 0% auto;
+                                width: 20px;
+                            }
+                        }
+
+                        &:hover, .active{
+                            background: lighten($primary-color, 10%);
+                            box-shadow: $box-shadow;
+
+                            a{
+                                color: $base-white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+
+                    li.active{
+                        background: lighten($primary-color, 10%);
+                        box-shadow: $box-shadow;
+
+                        a{
+                            color: $base-white;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            .sidebar-footer{
+                margin-top: 20px;
+
+                h3{
+                    font-size: $font-size-base;
+                    font-weight: $font-weight-thin;
+
+                    color: $base-white;
+
+                    letter-spacing: 3px;
+                    text-transform: uppercase;
+
+                    text-align: center;
+                    display: none;
+                }
+
+                ul{
+                    margin: 0px;
+                    padding: 0px;
+
+                    li{
+                        list-style: none;
+                        margin-top: 10px;
+
+                        border-radius: $border-radius;
+                        padding: 10px;
+
+                        display: flex;
+                        justify-content: center;
+
+                        a{
+                            color: $base-white;
+                            text-decoration: none;
+                            font-size: $font-size-base;
+
+                            text-align: center;
+
+                            span{
+                                display: none;
+                            }
+
+                            svg{
+                                margin: 0% auto;
+                                width: 20px;
+                            }
+                        }
+
+                        &:hover, .active{
+                            background: $primary-color;
+                            
+
+                            a{
+                                color: $base-white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -768,6 +956,280 @@ Tables
 
                         .tab-pane{
                             margin-top: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Payment methods
+.payment-method{
+    border: 1px solid #eee;
+    border-radius: $border-radius;
+    padding: 10px;
+    background-color: $base-white;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    .payment-method-icon{
+        width: 60px;
+        height: 50px;
+        margin-right: 15px;
+
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .payment-method-details{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .payment-method-name{
+
+            p{
+                font-size: $font-size-sm;
+                font-weight: $font-weight-bold;
+
+                color: $base-black;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                margin-bottom: 5px;
+            }
+
+            p.expiry{
+                font-size: $font-size-sm;
+                font-weight: $font-weight-normal;
+
+                color: $base-black;
+            }
+        }
+
+        .payment-method-actions{
+            display: flex;
+            align-items: center;
+
+            margin-left: 20px;
+        }
+    }
+}
+
+// Auth pages
+.authentication-layout{
+    width: 100%;
+}
+
+.auth-page{
+    width: 100%;
+
+    .auth-page-inner{
+        display: flex;
+        align-items: center;
+
+        .auth-page-left{
+            width: 50%;
+            height: 100vh;
+            background-image: url(https://images.unsplash.com/photo-1535957998253-26ae1ef29506?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: $primary-color;
+            box-shadow: $box-shadow;
+
+            .auth-page-left-inner{
+                height: 100%;
+                width: 100%;
+
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .auth-page-left-text{
+
+                    text-align: center;
+
+                    img{
+                        width: 50px;
+                        height: 50px;
+                        margin-bottom: 20px;
+                        border-radius: 50%;
+                    }
+
+                    h1{
+                        font-size: $font-size-xxl;
+                        font-weight: $font-weight-bold;
+
+                        color: $base-white;
+                        text-transform: uppercase;
+                        letter-spacing: 3px;
+
+                        margin-bottom: 20px;
+
+                        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                    }
+
+                    p{
+                        font-size: $font-size-lg;
+                        font-weight: $font-weight-normal;
+
+                        color: $base-white;
+
+                        text-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+                    }
+                }
+            }
+
+        }
+
+        .auth-page-right{
+            width: 50%;
+            height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background-color: $primary-color;
+
+            .auth-page-content{
+                
+                .auth-page-content-inner{
+
+                    .auth-page-content-header{
+
+                        h2.auth-page-content-title{
+                            font-size: $font-size-xxxl;
+                            font-weight: $font-weight-normal;
+
+                            color: $base-white;
+                            text-transform: uppercase;
+                            letter-spacing: 3px;
+
+                            margin-bottom: 20px;
+
+                            text-align: center;
+                        }
+
+                        p{
+                            font-size: $font-size-lg;
+                            font-weight: $font-weight-normal;
+
+                            color: $base-white;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                    }
+
+                    .auth-page-content-body{
+                        padding-top: 100px;
+                        padding-bottom: 20px;
+
+                        width: 400px;
+                        margin: 0% auto;
+
+                        form{
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            .form-group{
+                                width: 100%;
+                                margin-bottom: 20px;
+
+                                label{
+                                    font-size: $font-size-base;
+                                    font-weight: $font-weight-normal;
+                                    margin-bottom: 10px;
+
+                                    color: $base-white;
+                                }
+
+                                input, select, textarea{
+                                    width: 100%;
+                                    padding: 10px 10px;
+                                    padding-left: 20px;
+                                    border-radius: $border-radius;
+                                    border: 1px solid $primary-color;
+
+                                    font-size: $font-size-base;
+                                    font-weight: $font-weight-normal;
+
+                                    color: $base-white;
+
+                                    background: lighten($primary-color, 10%);
+
+                                    &:hover{
+
+                                    }
+
+                                    &:focus{
+                                        outline: none;
+                                        border-color: lighten($primary-color, 20%);
+                                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                                    }
+                                }
+
+                                // Make placeholder white
+                                input::placeholder, select::placeholder, textarea::placeholder{
+                                    color: $base-white;
+                                    opacity: 0.5;
+                                }
+                                input:-ms-input-placeholder, select:-ms-input-placeholder, textarea:-ms-input-placeholder{
+                                    color: $base-white;
+                                    opacity: 0.5;
+                                }
+
+                                button{
+                                    width: 100%;
+                                    padding: 15px 15px;
+                                    border-radius: $border-radius;
+                                    border: 1px solid darken($primary-color, 10%);
+
+                                    font-size: $font-size-base;
+                                    font-weight: $font-weight-normal;
+
+                                    background-color: darken($primary-color, 10%);
+                                    border-color: darken($primary-color, 10%);
+                                    color: $base-white;
+
+                                    &:hover, &:focus{
+                                        transition: all 0.3s ease;
+                                        outline: none;
+                                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                                        background-color: lighten($primary-color, 10%);
+                                        border-color: lighten($primary-color, 10%);
+                                        color: $base-white;
+                                    }
+                                }
+                            }
+
+                            .btn{
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .auth-page-content-footer{
+                        margin-top: 20px;
+
+                        p{
+                            font-size: $font-size-base;
+                            font-weight: $font-weight-normal;
+
+                            color: $base-white;
+                            text-align: center;
+
+                            a{
+                                color: $base-white;
+                            }
                         }
                     }
                 }

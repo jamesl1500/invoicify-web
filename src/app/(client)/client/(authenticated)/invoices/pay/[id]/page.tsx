@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +10,31 @@ import axios from "axios";
 import Link from "next/link";
 
 import Loading from "@/components/screens/Loading";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCcVisa, faCcMastercard, faCcAmex, faCcDiscover } from "@fortawesome/free-brands-svg-icons";
+import { toast } from "react-toastify";
+
+const brandIconMap = {
+    "visa" : <FontAwesomeIcon icon={faCcVisa} />,
+    "mastercard" : <FontAwesomeIcon icon={faCcMastercard} />,
+    "amex" : <FontAwesomeIcon icon={faCcAmex} />,
+    "discover" : <FontAwesomeIcon icon={faCcDiscover} />,
+    "default" : <FontAwesomeIcon icon={faCcVisa} />,
+}
+
+interface PaymentMethod {
+    id: string;
+    brand: string;
+    last4: string;
+    exp_month: number;
+    exp_year: number;
+}
+
+interface Props {
+    methods: PaymentMethod[];
+    onSelete: (methodId: string) => void;
+}
 
 export default function PayInvoicePage({ params }: { params: { id: string } }) {
     const { data: session } = useSession();
@@ -60,6 +86,39 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
         }
     };
 
+    const [cards, setCards] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!session?.accessToken) {
+            return;
+        }
+
+        axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/stripe/saved-cards`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.accessToken}`,
+                },
+            }
+        ).then((response) => {
+            if (response.status === 200) {
+                setCards(response.data);
+            } else {
+                console.error("Failed to fetch payment methods");
+            }
+            setLoading(false);
+        });
+    }, [session?.accessToken]);
+
+    const [selectedCard, setSelectedCard] = useState<string | null>(null);
+
+    const selectCard = (cardId: string) => {
+        setSelectedCard(cardId);
+        toast.success("Payment method selected successfully");
+    };
+
     // Fetch the invoice data using the invoiceId
     const { data, error, isLoading } = useQuery({
         queryKey: ["invoice", invoiceId],
@@ -81,7 +140,7 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
                         <p>Pay your invoice</p>
                     </div>
                     <div className="page-header-actions">
-                        <Link href="/client/invoices" className="btn btn-secondary">
+                        <Link href={`/client/invoices/view/${invoiceId}`} className="btn btn-secondary">
                             Back to Invoices
                         </Link>
                     </div>
@@ -89,14 +148,60 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
                 <div className="page-content">
                     <div className="page-content-inner">
                         {data ? (
+                            <>
                             <div className="invoice-details">
                                 <h2>Invoice #{data.invoice.invoice_number}</h2>
                                 <p><strong>Date:</strong> {new Date(data.invoice.issue_date).toLocaleDateString()}</p>
                                 <p><strong>Total Amount:</strong> ${data.invoice.total_amount}</p>
-                                <div className="payment-options">
-                                    
+                                <p><strong>From:</strong> {data.user.name}</p>
+                            </div>
+                            <div className="invoice-payment-center">
+                                <div className="invoice-payment-header">
+                                    <h3>Payment Details</h3>
+                                    <p>Pay your invoice using the payment methods below:</p>
+                                </div>
+                                <div className="invoice-payment-body">
+                                    <form>
+                                        {/* Display saved paytment methods first */}
+                                        <div className="invoice-payment-methods">
+                                            <h4>Saved Payment Methods</h4>
+                                            {cards.length > 0 ? (
+                                                cards.map((card) => (
+                                                    <div key={card.id} className="payment-method">
+                                                        <div className="payment-method-icon">
+                                                            {brandIconMap[card.brand] || brandIconMap["default"]}
+                                                        </div>
+                                                        <div className="payment-method-details">
+                                                            <div className="payment-method-name">
+                                                                <p>{card.brand} ending in {card.last4}</p>
+                                                                <p className="expiry">Expires {card.exp_month}/{card.exp_year}</p>
+                                                            </div>
+                                                            <div className="payment-method-actions">
+                                                                <button className="btn btn-sm btn-primary" onClick={() => selectCard(card.id)}>Select</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <p>No saved payment methods found.</p>
+                                            )}
+                                        </div>
+                                        {/* New payment method */}
+                                        <div className="invoice-payment-methods">
+                                            <h4>New Payment Method</h4>
+                                            <p>Add a new payment method to pay your invoice.</p>
+                                            <div className="new-payment-method">
+                                                {/* Add your form for adding a new payment method here */}
+                                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="invoice-payment-footer">
+                                    <p>If you have any questions, please contact us.</p>
                                 </div>
                             </div>
+                            </>
                         ) : (
                             <p>Unable to load invoice details.</p>
                         )}

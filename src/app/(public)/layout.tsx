@@ -20,7 +20,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        public
         <SessionProviderWrapper>{children}</SessionProviderWrapper>
       </body>
     </html>
