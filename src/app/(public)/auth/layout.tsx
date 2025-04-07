@@ -2,6 +2,7 @@ import { SessionProviderWrapper } from "@/wrappers/SessionProviderWrapper";
 
 import React from "react";
 import "@/styles/styles.scss";
+import { Providers } from "@/app/providers";
 
 // This is the authentication layout component
 export default function AuthenticationLayout({
@@ -15,7 +16,9 @@ export default function AuthenticationLayout({
         <div className="authentication-layout">
           <div className="authentication-layout-inner">
             <SessionProviderWrapper>
-              {children}
+              <Providers>
+                {children}
+              </Providers>
             </SessionProviderWrapper>
             </div>
         </div>

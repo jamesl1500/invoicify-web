@@ -1,13 +1,18 @@
 "use client";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { getSession, signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import Link from "next/link";
 import Image from "next/image";
 
+import { useSession } from "next-auth/react";
+
 export default function SignupPage() {
+    // Check if the user is already logged in
+    const { data: session } = useSession();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -44,10 +49,30 @@ export default function SignupPage() {
                 console.error(login.error);
                 return;
             }
-            // Redirect to the dashboard after successful login
-            router.push("/dashboard");
 
+            const sess = await getSession();
+            
+            // Next send them to stripe onboarding
+            const stripeOnboard = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/stripe/user/onboarding`, {
+                email,
+            }, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sess?.accessToken}`,
+                },
+            });
 
+            if (stripeOnboard.data.error) {
+                console.error(stripeOnboard.data.error);
+                return;
+            }
+
+            // Redirect to the Stripe onboarding URL
+            const data = await stripeOnboard.data;
+            if (data.url) {
+            window.location.href = data.url;
+            }
         }else{
             console.error("Signup failed");
         }

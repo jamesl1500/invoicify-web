@@ -20,7 +20,8 @@ const fetchClients = async (token: string) => {
     if (response.status === 200) {
         return response.json();
     } else if (response.status === 404) {
-        return { data: [] }; // Return an empty array if no clients are found
+        console.log("Clients not found");
+        return response.json(); // Return an empty array if no clients are found
     } else {
         throw new Error("Failed to fetch clients");
     }
@@ -165,7 +166,7 @@ export default function CreateInvoicePage() {
                                         <>
                                             <label htmlFor="client-select">Select Client</label>
                                             <select id="client-select" name="client-select" className="form-control">
-                                                {clients?.clients.map((client: { id: string; name: string }) => (
+                                                {clients?.clients?.map((client: { id: string; name: string }) => (
                                                     <option key={client.id} value={client.id}>
                                                         {client.name}
                                                     </option>

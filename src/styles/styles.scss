@@ -1135,6 +1135,21 @@ Tables
                         width: 400px;
                         margin: 0% auto;
 
+                        p.welcome-message{
+                            font-size: $font-size-lg;
+                            font-weight: $font-weight-normal;
+
+                            color: $base-white;
+                            text-align: center;
+                        }
+
+                        .form-group{
+
+                            a{
+
+                            }
+                        }
+
                         form{
                             display: flex;
                             flex-direction: column;
