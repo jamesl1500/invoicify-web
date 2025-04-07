@@ -16,6 +16,8 @@ import { useSession } from 'next-auth/react';
 
 import { signOut } from 'next-auth/react';
 
+import { Tooltip } from "antd";
+
 // Import images 
 const logo = "/static/images/invoicify-logo.png";
 
@@ -57,7 +59,7 @@ export default function Sidebar() {
             await signOut({ redirect: false });
 
             // Redirect to login page or perform any other action after logout
-            window.location.href = "/login";
+            window.location.href = "/";
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -95,49 +97,63 @@ export default function Sidebar() {
                                 {session.user.role === "user" ? (
                                     <>
                                         <li className={pathname === "/dashboard" ? "active" : ""}>
-                                            <Link href="/dashboard">
-                                                <FontAwesomeIcon icon={faHome} />
-                                                <span>Dashboard</span>
-                                            </Link>
+                                            <Tooltip title="Dashboard" placement="right">
+                                                <Link href="/dashboard">
+                                                    <FontAwesomeIcon icon={faHome} />
+                                                    <span>Dashboard</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                         <li>
-                                            <Link href="/invoices">
-                                                <FontAwesomeIcon icon={faFileInvoice} />
-                                                Invoices
-                                            </Link>
+                                            <Tooltip title="Invoices" placement="right">
+                                                <Link href="/invoices">
+                                                    <FontAwesomeIcon icon={faFileInvoice} />
+                                                    <span>Invoices</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                         <li>
-                                            <Link href="/clients">
-                                                <FontAwesomeIcon icon={faUser} />
-                                                Clients
-                                            </Link>
+                                            <Tooltip title="Clients" placement="right">
+                                                <Link href="/clients">
+                                                    <FontAwesomeIcon icon={faUser} />
+                                                    <span>Clients</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                         <li>
-                                            <Link href="/payments">
-                                                <FontAwesomeIcon icon={faMoneyBill} />
-                                                Payments
-                                            </Link>
+                                            <Tooltip title="Payments" placement="right">
+                                                <Link href="/payments">
+                                                    <FontAwesomeIcon icon={faMoneyBill} />
+                                                    <span>Payments</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                     </>
                                 ) : (
                                     <>
                                         <li className={pathname === "/dashboard" ? "active" : ""}>
-                                            <Link href="/client/dashboard">
-                                                <FontAwesomeIcon icon={faHome} />
-                                                <span>Dashboard</span>
-                                            </Link>
+                                            <Tooltip title="Dashboard" placement="right">
+                                                <Link href="/client/dashboard">
+                                                    <FontAwesomeIcon icon={faHome} />
+                                                    <span>Dashboard</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                         <li>
-                                            <Link href="/client/invoices">
-                                                <FontAwesomeIcon icon={faFileInvoice} />
-                                                <span>My Invoices</span>
-                                            </Link>
+                                            <Tooltip title="My Invoices" placement="right">
+                                                <Link href="/client/invoices">
+                                                    <FontAwesomeIcon icon={faFileInvoice} />
+                                                    <span>My Invoices</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                         <li>
-                                            <Link href="/client/payments">
-                                                <FontAwesomeIcon icon={faMoneyBill} />
-                                                <span>My Payments</span>
-                                            </Link>
+                                            <Tooltip title="My Payments" placement="right">
+                                                <Link href="/client/payments">
+                                                    <FontAwesomeIcon icon={faMoneyBill} />
+                                                    <span>My Payments</span>
+                                                </Link>
+                                            </Tooltip>
                                         </li>
                                     </>
                                 )}

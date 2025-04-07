@@ -116,7 +116,38 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
 
     const selectCard = (cardId: string) => {
         setSelectedCard(cardId);
+        console.log("Selected card ID:", cardId);
         toast.success("Payment method selected successfully");
+        return false;
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (!selectedCard) {
+            toast.error("Please select a payment method.");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/client/invoices/${invoiceId}/pay`,
+                { payment_method: selectedCard },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${session?.accessToken}`,
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                toast.success("Invoice paid successfully!");
+                // Redirect or perform additional actions
+            }
+        } catch (error) {
+            toast.error("An error occurred while paying the invoice.");
+            console.error("Error paying invoice:", error);
+        }
     };
 
     // Fetch the invoice data using the invoiceId
@@ -141,7 +172,7 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
                     </div>
                     <div className="page-header-actions">
                         <Link href={`/client/invoices/view/${invoiceId}`} className="btn btn-secondary">
-                            Back to Invoices
+                            Back to Invoice
                         </Link>
                     </div>
                 </div>
@@ -161,31 +192,31 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
                                     <p>Pay your invoice using the payment methods below:</p>
                                 </div>
                                 <div className="invoice-payment-body">
-                                    <form>
-                                        {/* Display saved paytment methods first */}
-                                        <div className="invoice-payment-methods">
-                                            <h4>Saved Payment Methods</h4>
-                                            {cards.length > 0 ? (
-                                                cards.map((card) => (
-                                                    <div key={card.id} className="payment-method">
-                                                        <div className="payment-method-icon">
-                                                            {brandIconMap[card.brand] || brandIconMap["default"]}
+                                    {/* Display saved paytment methods first */}
+                                    <div className="invoice-payment-methods">
+                                        <h4>Saved Payment Methods</h4>
+                                        {cards.length > 0 ? (
+                                            cards.map((card) => (
+                                                <div key={card.id} className="payment-method">
+                                                    <div className="payment-method-icon">
+                                                        {brandIconMap[card.brand] || brandIconMap["default"]}
+                                                    </div>
+                                                    <div className="payment-method-details">
+                                                        <div className="payment-method-name">
+                                                            <p>{card.brand} ending in {card.last4}</p>
+                                                            <p className="expiry">Expires {card.exp_month}/{card.exp_year}</p>
                                                         </div>
-                                                        <div className="payment-method-details">
-                                                            <div className="payment-method-name">
-                                                                <p>{card.brand} ending in {card.last4}</p>
-                                                                <p className="expiry">Expires {card.exp_month}/{card.exp_year}</p>
-                                                            </div>
-                                                            <div className="payment-method-actions">
-                                                                <button className="btn btn-sm btn-primary" onClick={() => selectCard(card.id)}>Select</button>
-                                                            </div>
+                                                        <div className="payment-method-actions">
+                                                            <button className="btn btn-sm btn-primary" onClick={() => selectCard(card.id)}>Select</button>
                                                         </div>
                                                     </div>
-                                                ))
-                                            ) : (
-                                                <p>No saved payment methods found.</p>
-                                            )}
-                                        </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>No saved payment methods found.</p>
+                                        )}
+                                    </div>
+                                    <form onSubmit={handleSubmit}>
                                         {/* New payment method */}
                                         <div className="invoice-payment-methods">
                                             <h4>New Payment Method</h4>
@@ -194,6 +225,12 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
                                                 {/* Add your form for adding a new payment method here */}
                                                 
                                             </div>
+                                        </div>
+                                        <div className="invoice-payment-actions">
+                                            <button type="submit" className="btn btn-primary">Pay Invoice</button>
+                                            <Link href={`/client/invoices/view/${invoiceId}`} className="btn btn-secondary">
+                                                Cancel
+                                            </Link>
                                         </div>
                                     </form>
                                 </div>

@@ -12,6 +12,8 @@ export default function Header() {
 
     const pageName: Record<string, string | { title: string; subtitle: string }> = {
         "/dashboard": "Dashboard",
+        "/client/dashboard": "Dashboard",
+        "/client/invoices": "Invoices",
         "/invoices": "Invoices",
         "/invoices/create": { title: "Invoices", subtitle: "New invoice" },
         "/clients": "Clients",
@@ -23,6 +25,7 @@ export default function Header() {
         "/create-invoice": "Create Invoice",
         "/profile": "Profile",
         "/invoice/view": { title: "Invoice", subtitle: "View Invoice" },
+        "/invoice/edit": { title: "Invoice", subtitle: "Edit Invoice" },
     };
     const pageIcon: Record<string, IconDefinition> = {
         "/dashboard": faHome,

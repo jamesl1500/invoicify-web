@@ -178,7 +178,7 @@ export default function CreateInvoicePage() {
                                 {/* Invoice Number */}
                                 <div className="form-group">
                                     <label htmlFor="invoice-number">Invoice Number</label>
-                                    <input type="text" name="invoice-number" id="invoice-number" className="form-control" placeholder="Enter invoice number" value={invoiceNumber} readOnly />
+                                    <input type="text" name="invoice-number" id="invoice-number" className="form-control" placeholder="Enter invoice number" value={invoiceNumber} />
                                 </div>
 
                                 <div className="form-group-inline">

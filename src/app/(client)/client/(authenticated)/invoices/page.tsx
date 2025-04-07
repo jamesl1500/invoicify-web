@@ -62,7 +62,7 @@ export default function ClientInvoices() {
                                 <thead>
                                     <tr>
                                         <th>Invoice Number</th>
-                                        <th>Client Name</th>
+                                        <th>From</th>
                                         <th>Status</th>
                                         <th>Total Amount</th>
                                         <th>Actions</th>
@@ -72,7 +72,7 @@ export default function ClientInvoices() {
                                     {invoices.map((invoice: any) => (
                                         <tr key={invoice.id}>
                                             <td>{invoice.invoice_number}</td>
-                                            <td>{invoice.client.name}</td>
+                                            <td>{invoice.user.name}</td>
                                             <td>{invoice.status}</td>
                                             <td>${invoice.total_amount}</td>
                                             <td>

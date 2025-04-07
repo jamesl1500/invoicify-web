@@ -154,9 +154,9 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                         <h3>Notifications</h3>
                                         {data.notifications.length > 0 ? (
                                             <ul className="list-group">
-                                                {data.invoice.notifications.map((notification) => (
+                                                {data.notifications.map((notification) => (
                                                     <li key={notification.id} className="list-group-item">
-                                                        <p><strong>{new Date(notification.created_at).toLocaleDateString()}:</strong> {notification.message}</p>
+                                                        <p><strong>{new Date(notification.created_at).toLocaleDateString()}:</strong> {notification.action} - {notification.description}</p>
                                                     </li>
                                                 ))}
                                             </ul>

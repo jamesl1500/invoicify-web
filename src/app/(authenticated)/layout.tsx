@@ -12,6 +12,9 @@ config.autoAddCss = false;
 // Import styles
 import "@/styles/styles.scss";
 
+// Import antd styles
+import "antd/dist/reset.css";
+
 // Import templates
 import Header from "@/templates/authenticated/header";
 import Footer from "@/templates/authenticated/footer";
@@ -47,7 +50,7 @@ export default function RootLayout({
           </div>
 
           {/* This is the main content area */}
-          <div className="website">
+          <div className="website sidebar-closed">
 
             <div className="header-holder">
               {/* This is the header component */}
