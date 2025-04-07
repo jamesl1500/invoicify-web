@@ -92,6 +92,8 @@ export default function ClientOnboardPage({ params }: { params: { id: string } }
             if (response.status === 201) {
                 // Handle successful onboarding
                 alert("Client onboarded successfully!");
+                // Redirect to the login page or perform any other action
+                window.location.href = "/client/login";
             } else {
                 throw new Error("Failed to onboard client");
             }

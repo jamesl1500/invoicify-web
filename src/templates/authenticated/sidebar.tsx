@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faHome, faFileInvoice, faUser, faCog, faXmark, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faFileInvoice, faUser, faCog, faXmark, faMoneyBill, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -188,16 +188,28 @@ export default function Sidebar() {
                         ) : (
                             <>
                                 <li>
-                                    <Link href="/client/settings">
-                                        <FontAwesomeIcon icon={faUser} />
-                                        <span>Settings</span>
-                                    </Link>
+                                    <Tooltip title="Payment methods" placement="right">
+                                        <Link href="/client/payment_methods">
+                                            <FontAwesomeIcon icon={faCreditCard} />
+                                            <span>Payment Methods</span>
+                                        </Link>
+                                    </Tooltip>
                                 </li>
                                 <li>
-                                    <Link href="/logout" onClick={handleLogout}>
-                                        <FontAwesomeIcon icon={faXmark} />
-                                        <span>Logout</span>
-                                    </Link>
+                                    <Tooltip title="Settings" placement="right">
+                                        <Link href="/client/settings">
+                                            <FontAwesomeIcon icon={faUser} />
+                                            <span>Settings</span>
+                                        </Link>
+                                    </Tooltip>
+                                </li>
+                                <li>
+                                    <Tooltip title="Logout" placement="right">
+                                        <Link href="/logout" onClick={handleLogout}>
+                                            <FontAwesomeIcon icon={faXmark} />
+                                            <span>Logout</span>
+                                        </Link>
+                                    </Tooltip>
                                 </li>
                             </>
                         )}

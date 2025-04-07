@@ -9,6 +9,7 @@ import axios from "axios";
 import Loading from "@/components/screens/Loading";
 
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function ViewInvoicePage({ params }: { params: { id: string } }) {
     const { data: session } = useSession();
@@ -67,6 +68,33 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
         enabled: !!session?.accessToken,
     }) as { data: Invoice | undefined; error: any; isLoading: boolean };
 
+    // Delete invoice function
+    const deleteInvoice = async () => {
+        if (session?.accessToken) {
+            try {
+                const response = await axios.delete(
+                    `${process.env.NEXT_PUBLIC_API_URL}/invoices/${invoiceId}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${session.accessToken}`,
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    // Handle successful deletion
+                    toast.success("Invoice deleted successfully");
+
+                    // Redirect to the invoices page
+                    window.location.href = "/invoices";
+                }
+            } catch (error) {
+                console.error("Error deleting invoice:", error);
+            }
+        }
+    };
+
     // This is the view invoice page
     if( isLoading || !session) {
         return <Loading text="Loading your invoice..." />;
@@ -84,6 +112,7 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                         <Link href={`/invoices/edit/${invoiceId}`} className="btn btn-primary">
                             Edit Invoice
                         </Link>
+                        <button className="btn btn-danger" onClick={deleteInvoice}>Delete Invoice</button>
                     </div>
                 </div>
                 <div className="page-content">

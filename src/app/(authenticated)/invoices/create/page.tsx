@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import Link from "next/link";
+
 const fetchClients = async (token: string) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients`, {
         method: "GET",
@@ -160,8 +162,13 @@ export default function CreateInvoicePage() {
                             <form onSubmit={handleSubmit}>
                                 {/* Client selection dropdown */}
                                 <div className="form-group">
-                                    {clients?.length === 0 ? (
-                                        <p>No clients found. Please create a client first.</p>
+                                    {clients?.clients.length === 0 ? (
+                                        <>
+                                            <p>No clients found. Please create a client first.</p>
+                                            <Link href="/clients/create" className="btn btn-primary">
+                                                Create Client
+                                            </Link>
+                                        </>
                                     ) : (
                                         <>
                                             <label htmlFor="client-select">Select Client</label>
