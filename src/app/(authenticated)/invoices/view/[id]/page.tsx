@@ -194,15 +194,24 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                                         <th>Amount</th>
                                                         <th>Method</th>
                                                         <th>Status</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {data.payments.map((payment) => (
                                                         <tr key={payment.id}>
-                                                            <td>{new Date(payment.date).toLocaleDateString()}</td>
+                                                            <td>{new Date(payment.payment_date).toLocaleDateString()}</td>
                                                             <td>${payment.amount}</td>
                                                             <td>{payment.method}</td>
                                                             <td>{payment.status}</td>
+                                                            <td>
+                                                                <Link href={`/payments/view/${payment.id}`} className="btn btn-primary btn-sm">
+                                                                    View 
+                                                                </Link>
+                                                                <Link href={`/payments/edit/${payment.id}`} className="btn btn-secondary btn-sm">
+                                                                    Refund
+                                                                </Link>
+                                                            </td>
                                                         </tr>
                                                     ))}
                                                 </tbody>

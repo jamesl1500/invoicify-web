@@ -177,9 +177,9 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {data.invoice.payments.map((payment) => (
+                                                    {data.payments.map((payment) => (
                                                         <tr key={payment.id}>
-                                                            <td>{new Date(payment.date).toLocaleDateString()}</td>
+                                                            <td>{new Date(payment.payment_date).toLocaleDateString()}</td>
                                                             <td>${payment.amount}</td>
                                                             <td>{payment.method}</td>
                                                             <td>{payment.status}</td>
