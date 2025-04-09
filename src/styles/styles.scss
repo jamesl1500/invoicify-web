@@ -26,6 +26,7 @@ $border-radius-lg: 1.50rem;
 
 $font-size-base: 1rem;
 $font-size-lg: 1.25rem;
+$font-size-md: 1.125rem;
 $font-size-sm: 0.875rem;
 $font-size-xs: 0.75rem;
 $font-size-xl: 1.5rem;
@@ -54,7 +55,11 @@ body{
     display: flex;
     min-height: 100vh;
 
-    background: $background-color;
+    background: #fff;
+}
+
+body.no-scroll{
+    overflow: hidden;
 }
 
 .btn{
@@ -191,29 +196,30 @@ body{
 
     label{
         font-size: $font-size-base;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-normal;
         margin-bottom: 10px;
 
-        color: $base-black;
+        color: $base-gray;
     }
 
     input, select, textarea{
         width: 100%;
         padding: 10px;
         border-radius: $border-radius;
-        border: 1px solid #eee;
+        border: 2px solid #ccc;
 
         font-size: $font-size-base;
         font-weight: $font-weight-normal;
 
         color: $base-black;
 
-        background: $background-color;
+        background: #fff;
 
-        &:focus{
+        &:focus, &:hover{
+            transition: all 0.3s ease;
             outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-color: $base-gray;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
     }
 }
@@ -236,7 +242,7 @@ body{
     width: 100%;
 
     .website-content{
-        padding-top: 20px;
+        padding: 0px;
     }
 }
 
@@ -247,13 +253,9 @@ body{
 // Header
 .header-holder{
     width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
 
     .header{
-        margin-bottom: 10px;
-
+        border-bottom: 1px solid #ccc;
         height: 75px;
 
         .header-inner{
@@ -261,8 +263,6 @@ body{
             justify-content: space-between;
 
             background-color: $base-white;
-            box-shadow: $box-shadow;
-            border-radius: $border-radius-lg;
 
             height: 100%;
 
@@ -284,8 +284,6 @@ body{
                     font-weight: $font-weight-thin;
 
                     color: $base-black;
-                    text-transform: uppercase;
-                    letter-spacing: 3px;
                 }
             }
 
@@ -348,12 +346,11 @@ body{
     top: 0;
     left: 0;
 
-    width: 75px;
+    width: 95px;
     height: 100vh;
 
     .sidebar{
         height: 100%;
-
         background-color: #17332d;
 
         .sidebar-inner{
@@ -533,6 +530,7 @@ body{
 
         .sidebar-inner{
             padding: 10px;
+            padding-top: 20px;
 
             .sidebar-header{
                 display: flex;
@@ -573,12 +571,17 @@ body{
             .sidebar-action{
                 padding-top: 20px;
 
+                .desktop-show{
+                    display: none;
+                }
+
                 .btn{
                     background: #fff;
                     box-shadow: $box-shadow;
                     color: $base-black;
                 }
             }
+
             .sidebar-content{
                 margin-top: 20px;
 
@@ -592,6 +595,8 @@ body{
                     text-transform: uppercase;
 
                     text-align: center;
+
+                    display: none;
                 }
 
                 ul{
@@ -740,8 +745,6 @@ Tables
     th{
         background-color: $primary-color;
         color: $base-white;
-        text-transform: uppercase;
-        letter-spacing: 3px;
     }
 
     tr{
@@ -759,11 +762,7 @@ Tables
 * Page
 */
 .page{
-    padding: 20px;
 
-    background-color: $base-white;
-    box-shadow: $box-shadow;
-    border-radius: $border-radius-lg;
 
     .page-inner{
 
@@ -801,14 +800,14 @@ Tables
         }
 
         .page-content{
-            border: 1px solid #eee;
-            border-radius: $border-radius-lg;
-            padding: 20px;
             background-color: $base-white;
 
             .page-content-inner{
-                
+                display: flex;
 
+                .page-content-block{
+                    width: 100%;
+                }
             }
         }
     }
@@ -890,6 +889,149 @@ Tables
             }
 
 
+        }
+    }
+}
+
+// Page: Create Invoice
+.page-create-invoice{
+    height: 100vh;
+
+    .page-inner{
+
+        .page-header{
+
+            .page-header-title{
+
+            }
+        }
+
+        .page-content{
+
+            .page-content-inner{
+
+                .page-content-block{
+
+                    .page-content-block-header{
+
+                        h1{
+                            font-size: $font-size-xl;
+                            font-weight: $font-weight-normal;
+
+                            color: $base-black;
+                            text-transform: uppercase;
+                            letter-spacing: 3px;
+
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+
+                .page-content-block.left-block{
+                    padding: 50px;
+                    overflow-y: scroll;
+                }
+
+                .page-content-block.right-block{
+                    background: #eee;
+                    height: 100vh;
+
+                    padding: 50px;
+
+                    .page-content-block{
+                        padding: 20px;
+                        background: $base-white;
+                        box-shadow: $box-shadow;
+                        border-radius: $border-radius;
+
+                        .invoice-preview-content{
+
+                            .preview-section h2.title{
+                                font-size: $font-size-lg;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-black;
+
+
+                            }
+
+                            .invoice-logo{
+
+                                width: 50px;
+                                height: 50px;
+
+                                margin-bottom: 20px;
+
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+                                    border-radius: $border-radius;
+                                    box-shadow: $box-shadow;
+                                }
+                            }
+
+                            .invoice-details-section{
+                                display: flex;
+                                justify-content: space-between;
+
+                                margin-bottom:20px;
+
+                                .invoice-welcome{
+
+                                    p.invoice-from{
+                                        font-weight: $font-weight-bold;
+                                    }
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+                                    }
+                                }
+
+                                .invoice-dates{
+                                    text-align:right;
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+                                    }
+                                }
+                            }
+
+                            .invoice-bill-section{
+                                display: flex;
+                                margin-bottom:20px;
+
+                                .invoice-bill-to{
+                                    width:100%;
+
+                                    h2{
+                                        font-size: $font-size-sm;
+                                    }
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+                                    }
+                                }
+
+                                .invoice-bill-from{
+                                    width:100%;
+
+                                    h2{
+                                        font-size: $font-size-sm;
+                                    }
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

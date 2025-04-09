@@ -10,6 +10,7 @@ import Loading from "@/components/screens/Loading";
 
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { Popconfirm } from "antd";
 
 export default function ViewInvoicePage({ params }: { params: { id: string } }) {
     const { data: session } = useSession();
@@ -91,6 +92,31 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                 }
             } catch (error) {
                 console.error("Error deleting invoice:", error);
+            }
+        }
+    };
+
+    // Refund payment function
+    const refundPayment = async (paymentId: string) => {
+        if (session?.accessToken) {
+            try {
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/payments/${paymentId}/refund`,
+                    {},
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${session.accessToken}`,
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    // Handle successful refund
+                    toast.success("Payment refunded successfully");
+                }
+            } catch (error) {
+                console.error("Error refunding payment:", error);
             }
         }
     };
@@ -208,9 +234,18 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                                                 <Link href={`/payments/view/${payment.id}`} className="btn btn-primary btn-sm">
                                                                     View 
                                                                 </Link>
-                                                                <Link href={`/payments/edit/${payment.id}`} className="btn btn-secondary btn-sm">
-                                                                    Refund
-                                                                </Link>
+                                                                {payment.status !== "refunded" && (
+                                                                    <Popconfirm
+                                                                        title="Are you sure you want to refund this payment?"
+                                                                        onConfirm={() => refundPayment(payment.id)}
+                                                                        okText="Yes"
+                                                                        cancelText="No"
+                                                                    >
+                                                                        <button className="btn btn-danger btn-sm">
+                                                                            Refund
+                                                                        </button>
+                                                                    </Popconfirm>
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     ))}

@@ -74,7 +74,7 @@ export default function ClientViewPage({ params }: { params: { id: string } }) {
                                 <ul>
                                     {data.invoices.map((invoice) => (
                                         <li key={invoice.id}>
-                                            <Link href={`/invoices/${invoice.id}`}>
+                                            <Link href={`/invoices/view/${invoice.id}`}>
                                                 Invoice #{invoice.invoice_number} - {new Date(invoice.created_at).toLocaleDateString()}
                                             </Link>
                                         </li>

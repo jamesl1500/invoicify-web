@@ -38,7 +38,17 @@ export default function RootLayout({
   // This is the root layout component for authenticated pages
   //const { data: session, status } = useSession();
 
+  // If we're on the create invopice page, we want to apply the "no-scroll" class to the body
+  const router = useRouter();
 
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === "/invoices/create") {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [router]);
   return (
     <html lang="en">
       <body>

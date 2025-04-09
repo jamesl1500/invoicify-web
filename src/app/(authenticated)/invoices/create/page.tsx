@@ -9,6 +9,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const fetchClients = async (token: string) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients`, {
@@ -146,21 +148,62 @@ export default function CreateInvoicePage() {
     const tax = (subtotal * taxRate) / 100;
     const total = subtotal + tax;
 
+    const [clientId, setClientId] = useState<string | null>(null);
+    const [clientName, setClientName] = useState<string | null>(null);
+    const [clientEmail, setClientEmail] = useState<string | null>(null);
+
+    const [invoiceDate, setInvoiceDate] = useState<string>(new Date().toISOString().split("T")[0]);
+    const [dueDate, setDueDate] = useState<string>(new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]);
+    const [invoiceNum, setInvoiceNum] = useState<string>(invoiceNumber);
+
     return (
         <div className="page page-create-invoice">
             <div className="page-inner">
-                <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Create Invoice</h1>
-                        <p>Create a new invoice for your clients</p>
-                    </div>
-                </div>
                 <div className="page-content">
                     <div className="page-content-inner">
-                        <div className="page-content-inner-form">
-                            {/* Form for creating a new invoice */}
+                        <div className="page-content-block left-block">
                             <form onSubmit={handleSubmit}>
-                                {/* Client selection dropdown */}
+                                <div className="page-content-block-header">
+                                    <h1>Invoice details</h1>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="invoice-number">Invoice Number</label>
+                                    <input
+                                        type="text"
+                                        id="invoice-number"
+                                        name="invoice-number"
+                                        className="form-control"
+                                        value={invoiceNumber}
+                                        readOnly
+                                    />
+                                </div>
+                                <div className="form-group-inline">
+                                    <div className="form-group">
+                                        <label htmlFor="invoice-date">Invoice Date</label>
+                                        <input
+                                            type="date"
+                                            id="invoice-date"
+                                            name="invoice-date"
+                                            className="form-control"
+                                            defaultValue={new Date().toISOString().split("T")[0]}
+                                            onChange={(e) => setInvoiceDate(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="due-date">Due Date</label>
+                                        <input
+                                            type="date"
+                                            id="due-date"
+                                            name="due-date"
+                                            className="form-control"
+                                            defaultValue={new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]}
+                                            onChange={(e) => setDueDate(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="page-content-block-header">
+                                    <h1>Bill Payment</h1>
+                                </div>
                                 <div className="form-group">
                                     {clients?.clients.length === 0 ? (
                                         <>
@@ -171,37 +214,24 @@ export default function CreateInvoicePage() {
                                         </>
                                     ) : (
                                         <>
-                                            <label htmlFor="client-select">Select Client</label>
-                                            <select id="client-select" name="client-select" className="form-control">
+                                            <label htmlFor="client-select">Select a Client</label>
+                                            <select id="client-select" name="client-select" className="form-control" onChange={(e) => setClientId(e.target.value)}>
+                                                <option value="" disabled selected>
+                                                    Select a client
+                                                </option>
                                                 {clients?.clients?.map((client: { id: string; name: string }) => (
                                                     <option key={client.id} value={client.id}>
-                                                        {client.name}
+                                                        {client.name} - {client.email}
                                                     </option>
                                                 ))}
                                             </select>
                                         </>
                                     )}
+                                </div><br />
+                                <div className="page-content-block-header">
+                                    <h1>Items</h1>
                                 </div>
-
-                                {/* Invoice Number */}
                                 <div className="form-group">
-                                    <label htmlFor="invoice-number">Invoice Number</label>
-                                    <input type="text" name="invoice-number" id="invoice-number" className="form-control" placeholder="Enter invoice number" value={invoiceNumber} />
-                                </div>
-
-                                <div className="form-group-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="invoice-date">Invoice Date</label>
-                                        <input type="date" name="invoice-date" id="invoice-date" className="form-control" value={new Date().toISOString().split("T")[0]} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="due-date">Due Date</label>
-                                        <input type="date" name="due-date" id="due-date" className="form-control" value={new Date().toISOString().split("T")[0]} />
-                                    </div>
-                                </div>
-
-                                <div className="form-group invoice-items">
-                                    <label htmlFor="invoice-items">Invoice Items</label>
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -217,22 +247,22 @@ export default function CreateInvoicePage() {
                                             {invoiceItems.map((item, index) => 
                                                 <tr key={index}>
                                                     <td>
-                                                        <input type="text" className="form-control" placeholder="Item name" value={item.item} onChange={(e) => updateItem(index, "item", e.target.value)} />
+                                                        <input type="text" placeholder="Item name" value={item.item} onChange={(e) => updateItem(index, "item", e.target.value)} />
                                                     </td>
                                                     <td>
-                                                        <input type="text" className="form-control" placeholder="Description" value={item.description} onChange={(e) => updateItem(index, "description", e.target.value)} />
+                                                        <input type="text" placeholder="Description" value={item.description} onChange={(e) => updateItem(index, "description", e.target.value)} />
                                                     </td>
                                                     <td>
-                                                        <input type="number" className="form-control" placeholder="Quantity" value={item.quantity} onChange={(e) => updateItem(index, "quantity", Number(e.target.value))} />
+                                                        <input type="number" placeholder="Quantity" value={item.quantity} onChange={(e) => updateItem(index, "quantity", Number(e.target.value))} />
                                                     </td>
                                                     <td>
-                                                        <input type="number" className="form-control" placeholder="Price" value={item.price} onChange={(e) => updateItem(index, "price", Number(e.target.value))} />
+                                                        <input type="number" placeholder="Price" value={item.price} onChange={(e) => updateItem(index, "price", Number(e.target.value))} />
                                                     </td>
                                                     <td>${(item.quantity * item.price).toFixed(2)}</td>
                                                     <td>
                                                     {invoiceItems.length > 1 && (
                                                         <button className="btn btn-sm" onClick={() => removeItem(index)}>
-                                                        Remove
+                                                            <FontAwesomeIcon icon={faTrash} />
                                                         </button>
                                                     )}
                                                     </td>
@@ -243,54 +273,95 @@ export default function CreateInvoicePage() {
                                     <button type="button" className="btn btn-secondary" onClick={addItem}>
                                         Add Item
                                     </button>
+                                </div><br />
+                                <div className="page-content-block-header">
+                                    <h1>Notes / Term</h1>
                                 </div>
-
-                                <div className="form-group-inline">
-                                    {/* Notes */}
-                                    <div className="form-group">
-                                        <label htmlFor="notes">Notes</label>
-                                        <textarea id="notes" name="notes" className="form-control" placeholder="Add any notes here" rows={4}></textarea>
-                                    </div>
-
-                                    {/* Terms */}
-                                    <div className="form-group">
-                                        <label htmlFor="terms">Terms</label>
-                                        <textarea id="terms" name="terms" className="form-control" placeholder="Add any terms here" rows={4}></textarea>
-                                    </div>
-                                </div>
-
                                 <div className="form-group">
-                                    <label htmlFor="tax-rate">Tax Rate (%)</label>
-                                    <input type="number" name="tax-rate" id="tax-rate" className="form-control" value={taxRate} onChange={(e) => setTaxRate(Number(e.target.value))} />
+                                    <label htmlFor="notes">Notes</label>
+                                    <textarea
+                                        id="notes"
+                                        name="notes"
+                                        className="form-control"
+                                        rows={4}
+                                        placeholder="Notes"
+                                    ></textarea>
                                 </div>
-                                
-                                <div className="form-group-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="subtotal">Subtotal</label>
-                                        <input type="text" id="subtotal" className="form-control" value={`$${subtotal.toFixed(2)}`} readOnly />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="tax">Tax</label>
-                                        <input type="text" id="tax" className="form-control" value={`$${tax.toFixed(2)}`} readOnly />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="total">Total</label>
-                                        <input type="text" id="total" className="form-control" value={`$${total.toFixed(2)}`} readOnly />
-                                    </div>
-                                </div>
-
-                                {/* Submit Button */}
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-primary">
-                                        Create Invoice
-                                    </button>
-                                    <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
-                                        Cancel
-                                    </button>
+                                    <label htmlFor="terms">Terms</label>
+                                    <textarea
+                                        id="terms"
+                                        name="terms"
+                                        className="form-control"
+                                        rows={4}
+                                        placeholder="Terms"
+                                    ></textarea>
                                 </div>
+
                             </form>
+                        </div>
+                        <div className="page-content-block right-block invoice-preview">
+                            <div className="page-content-block">
+
+                                <div className="invoice-preview-content">
+                                    <div className="invoice-logo">
+                                        <img src="/static/images/invoicify-logo.png" alt="Invoicify Logo" />
+                                    </div>
+                                    <div className="invoice-details-section preview-section">
+                                        <div className="invoice-welcome">
+                                            <p className="invoice-from">Invoice from {session?.user?.name}</p>
+                                            <p className="invoice-number">Invoice #: {invoiceNumber}</p>
+                                        </div>
+                                        <div className="invoice-dates">
+                                            <p>Invoice Date: {invoiceDate}</p>
+                                            <p>Due Date: {dueDate}</p>
+                                        </div>
+                                    </div>
+                                    <div className="invoice-bill-section preview-section">
+                                        <div className="invoice-bill-from">
+                                            <h2>Bill From:</h2>
+                                            <p>{session?.user?.name}</p>
+                                            <p>{session?.user?.email}</p>
+                                        </div>
+                                        <div className="invoice-bill-to">
+                                            <h2>Bill To:</h2>
+                                            <p>{clients?.clients?.find((client: { id: string }) => client.id === clientId)?.name}</p>
+                                            <p>{clients?.clients?.find((client: { id: string }) => client.id === clientId)?.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="preview-section">
+                                        <h2 className="title">Items</h2>
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Description</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {invoiceItems.map((item, index) => (
+                                                    <tr key={index}>
+                                                        <td>{item.item || "N/A"}</td>
+                                                        <td>{item.description || "N/A"}</td>
+                                                        <td>{item.quantity}</td>
+                                                        <td>${item.price.toFixed(2)}</td>
+                                                        <td>${(item.quantity * item.price).toFixed(2)}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div className="preview-section">
+                                        <h2 className="title">Pricing</h2>
+                                        <p>Subtotal: ${subtotal.toFixed(2)}</p>
+                                        <p>Tax ({taxRate}%): ${tax.toFixed(2)}</p>
+                                        <p>Total: ${total.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
