@@ -130,15 +130,17 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
         <div className="page page-invoice">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Invoice</h1>
-                        <p>View your invoice</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <Link href={`/invoices/edit/${invoiceId}`} className="btn btn-primary">
-                            Edit Invoice
-                        </Link>
-                        <button className="btn btn-danger" onClick={deleteInvoice}>Delete Invoice</button>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Invoice</h1>
+                            <p>View your invoice</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <Link href={`/invoices/edit/${invoiceId}`} className="btn btn-primary">
+                                Edit Invoice
+                            </Link>
+                            <button className="btn btn-danger" onClick={deleteInvoice}>Delete Invoice</button>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">
@@ -178,6 +180,7 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                         <table className="invoice-items table">
                                             <thead>
                                                 <tr>
+                                                    <th>Item</th>
                                                     <th>Description</th>
                                                     <th>Quantity</th>
                                                     <th>Price</th>
@@ -187,6 +190,7 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
                                             <tbody>
                                                 {data.items.map((item) => (
                                                     <tr key={item.id}>
+                                                        <td>{item.item}</td>
                                                         <td>{item.description}</td>
                                                         <td>{item.quantity}</td>
                                                         <td>${item.unit_price}</td>

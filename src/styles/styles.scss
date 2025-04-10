@@ -55,7 +55,7 @@ body{
     display: flex;
     min-height: 100vh;
 
-    background: #fff;
+    background: #eee;
 }
 
 body.no-scroll{
@@ -77,6 +77,13 @@ body.no-scroll{
 
     margin-right: 10px;
     text-decoration: none;
+
+    &:disabled{
+        background-color: $base-gray;
+        border-color: $base-gray;
+
+        color: $base-white;
+    }
 
     &:last-child{
         margin-right: 0px;
@@ -763,36 +770,56 @@ Tables
 */
 .page{
 
-
     .page-inner{
 
         .page-header{
-            display: flex;
-            justify-content: space-between;
+            padding: 20px;
 
-            .page-header-title{
-                font-size: $font-size-lg;
-                font-weight: $font-weight-thin;
+            .page-header-inner{
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border: 1px solid #ccc;
 
-                color: $base-black;
-                text-transform: uppercase;
-                letter-spacing: 3px;
-            }
+                border-radius: $border-radius;
 
-            .page-header-action{
                 display: flex;
-                align-items: center;
+                justify-content: space-between;
 
-                .page-header-action-item{
-                    margin-left: 20px;
+                padding: 20px;
 
-                    a{
-                        color: $base-black;
-                        text-decoration: none;
-                        font-size: $font-size-base;
+                .page-header-title{
 
-                        svg{
-                            width: 20px;
+                    h1{
+                        margin: 0px;
+                        padding: 0px;
+
+                        font-weight: $font-weight-bold;
+                    }
+
+                    p{
+                        margin: 0px;
+                        padding: 0px;
+
+                        font-size: $font-size-md;
+                        font-weight: $font-weight-normal;
+                    }
+                }
+
+                .page-header-action{
+                    display: flex;
+                    align-items: center;
+
+                    .page-header-action-item{
+                        margin-left: 20px;
+
+                        a{
+                            color: $base-black;
+                            text-decoration: none;
+                            font-size: $font-size-base;
+
+                            svg{
+                                width: 20px;
+                            }
                         }
                     }
                 }
@@ -800,7 +827,8 @@ Tables
         }
 
         .page-content{
-            background-color: $base-white;
+            padding: 20px;
+            padding-top: 0px;
 
             .page-content-inner{
                 display: flex;
@@ -907,6 +935,7 @@ Tables
         }
 
         .page-content{
+            padding: 0px;
 
             .page-content-inner{
 
@@ -930,6 +959,11 @@ Tables
                 .page-content-block.left-block{
                     padding: 50px;
                     overflow-y: scroll;
+
+                    border-right: 1px solid #ccc;
+                    height: calc(100vh - 75px);
+
+                    background: $base-white;
                 }
 
                 .page-content-block.right-block{
@@ -938,11 +972,16 @@ Tables
 
                     padding: 50px;
 
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
                     .page-content-block{
                         padding: 20px;
                         background: $base-white;
                         box-shadow: $box-shadow;
                         border-radius: $border-radius;
+                        border: 1px solid #ccc;
 
                         .invoice-preview-content{
 
@@ -982,6 +1021,10 @@ Tables
                                         font-weight: $font-weight-bold;
                                     }
 
+                                    p.invoice-number{
+                                        color: #6c757d;
+                                    }
+
                                     p{
                                         margin: 0px;
                                         padding: 0px;
@@ -994,6 +1037,10 @@ Tables
                                     p{
                                         margin: 0px;
                                         padding: 0px;
+
+                                        span{
+                                            color: #6c757d;
+                                        }
                                     }
                                 }
                             }
@@ -1007,6 +1054,7 @@ Tables
 
                                     h2{
                                         font-size: $font-size-sm;
+                                        color: #6c757d;
                                     }
 
                                     p{
@@ -1020,11 +1068,69 @@ Tables
 
                                     h2{
                                         font-size: $font-size-sm;
+                                        color: #6c757d;
                                     }
 
                                     p{
                                         margin: 0px;
                                         padding: 0px;
+                                    }
+                                }
+                            }
+
+                            .invoice-items-section{
+
+                                h2.title{
+                                    font-size: $font-size-sm;
+                                    font-weight: $font-weight-normal;
+
+                                    color: #6c757d;
+                                }
+                            }
+
+                            .pricing-section{
+                                display: flex;
+                                align-items: right;
+
+                                .left-pricing{
+                                    width: 100%;
+
+                                    h2.title{
+                                        font-size: $font-size-sm;
+                                        font-weight: $font-weight-normal;
+
+                                        color: #6c757d;
+                                    }
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+                                        font-size: $font-size-sm;
+                                    }
+                                }
+
+                                .right-pricing{
+                                    width: 100%;
+
+                                    h2.title{
+                                        font-size: $font-size-sm;
+                                        font-weight: $font-weight-normal;
+
+                                        color: #6c757d;
+                                    }
+
+                                    p{
+                                        margin: 0px;
+                                        padding: 0px;
+
+                                        span{
+                                            text-align: right;
+                                            float: right;
+                                        }
+
+                                        span.total{
+                                            font-weight: $font-weight-bold;
+                                        }
                                     }
                                 }
                             }
@@ -1036,14 +1142,219 @@ Tables
     }
 }
 
-// Page: Invoices
-.page-invoice{
+// Page: View Invoices
+.page-view-invoices{
 
     .page-inner{
+
+        .page-header{
+            display: flex;
+            justify-content: space-between;
+
+            .page-header-title{
+
+                h1{
+                    margin-bottom: 0px;
+                }
+            }
+        }
 
         .page-content{
 
             .page-content-inner{
+                display: block;
+
+                .page-content-tabs{
+
+                    .page-content-tab{
+                        display: none;
+                    }
+
+                    .page-content-tab.show{
+                        display: block;
+                    }
+                }
+
+                .page-content-navigation{
+                    margin-bottom: 20px;
+                    border-top: 1px solid #ccc;
+                    padding-top: 20px;
+
+                    ul.inner-nav{
+                        margin: 0px;
+                        padding: 0px;
+
+
+                        li{
+                            display: inline-block;
+                            list-style: none;
+                            margin-right: 20px;
+                            padding: 10px;
+                            cursor: pointer;
+
+                            a{
+                                color: $base-black;
+                                text-decoration: none;
+                                font-size: $font-size-base;
+
+                                svg{
+                                    width: 20px;
+                                    height: 20px;
+                                    margin-right: 10px;
+                                }
+                            }
+
+                            &:hover, &:focus{
+                                background: $primary-color;
+                                color: $base-white;
+                                padding: 10px;
+                                border-radius: $border-radius;
+                                box-shadow: $box-shadow;
+
+                                a{
+                                    color: $base-white;
+                                    text-decoration: none;
+                                }
+                            }
+
+                            &:last-child{
+                                margin-right: 0px;
+                            }
+                        }
+
+                        li.active{
+                            background: $primary-color;
+                            color: $base-white;
+                            padding: 10px;
+                            border-radius: $border-radius;
+                            box-shadow: $box-shadow;
+
+                            a{
+                                color: $base-white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+
+                .page-content-inline-blocks{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    margin-bottom: 20px;
+                    gap: 20px;
+
+                    .page-content-block.special{
+                        background: $primary-color;
+                        color: $base-white;
+
+                        .page-content-block-title{
+
+                            h2{
+                                font-size: $font-size-md;
+                                font-weight: $font-weight-normal;
+                                color: #fff;
+                            }
+                        }
+
+                        .page-content-block-content{
+
+                            h2{
+                                font-size: $font-size-lg;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-black;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+                                color: #fff;
+                            }
+                        }
+                    }
+
+                    .page-content-block{
+                        width: 100%;
+                        padding: 20px;
+                        background: $base-white;
+                        box-shadow: $box-shadow;
+                        border-radius: $border-radius;
+                        border: 1px solid #ccc;
+
+                        .page-content-block-title{
+
+                            h2{
+                                font-size: $font-size-md;
+                                font-weight: $font-weight-normal;
+                                color: #6c757d;
+                            }
+                        }
+
+                        .page-content-block-content{
+
+                            h2{
+                                font-size: $font-size-lg;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-black;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+                                margin-bottom: 0px;
+                            }
+                        }
+                    }
+                }
+
+                .page-content-tab{
+                    
+                    table.table{
+                        
+                        thead{
+                            background: $primary-color;
+                            color: $base-white;
+
+                            border-radius: $border-radius;
+
+                            //Make the head have a shadow
+                            box-shadow: $box-shadow;
+
+                            // Add border radius to the head
+                            th:first-child{
+                                border-top-left-radius: $border-radius;
+                            }
+                            th:last-child{
+                                border-top-right-radius: $border-radius;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Page: View Invoice
+.page-invoice{
+    background: #eee;
+
+    .page-inner{
+
+        .page-header{
+
+            .page-header-title{
+
+            }
+        }
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+                display: block;
+                width: 100%;
 
                 .invoice-details{
 

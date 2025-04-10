@@ -32,11 +32,54 @@ const fetchClients = async (token: string) => {
 }
 
 export default function CreateInvoicePage() {
+    const [clientId, setClientId] = useState<string | null>(null);
+    const [clientName, setClientName] = useState<string | null>(null);
+    const [clientEmail, setClientEmail] = useState<string | null>(null);
+
+    const [invoiceDate, setInvoiceDate] = useState<string>(new Date().toISOString().split("T")[0]);
+    const [dueDate, setDueDate] = useState<string>(new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]);
+    
     // Let generate an invoice number 
     const invoiceNumber = useMemo(() => {
         const date = new Date();
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${Math.floor(Math.random() * 10000)}`;
     }, []);
+
+    const [invoiceNum, setInvoiceNum] = useState<string>(invoiceNumber);
+    const [invoiceNotes, setInvoiceNotes] = useState<string>("");
+    const [invoiceTerms, setInvoiceTerms] = useState<string>("");
+
+    // For handling submit button status (Make sure form is complete)
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    // Invoice items
+    const [invoiceItems, setInvoiceItems] = useState([
+        {
+            item: "",
+            description: "",
+            quantity: 1,
+            price: 0,
+        },
+    ]);
+
+    // Tax rate
+    const [taxRate, setTaxRate] = useState(5);
+
+    // Check if form is valid
+    const checkFormValidity = () => {
+        const isValid = invoiceItems.every((item) => item.item && item.description && item.quantity > 0 && item.price > 0);
+        const isClientSelected = clientId !== null && clientName !== null && clientEmail !== null;
+        const isInvoiceDateValid = invoiceDate !== "";
+        const isDueDateValid = dueDate !== "";
+        const isTaxRateValid = taxRate > 0;
+
+        if (isValid && isClientSelected && isInvoiceDateValid && isDueDateValid && isTaxRateValid) {
+            setIsFormValid(true);
+            return true;
+        }
+        return false;
+    };
 
     // Get the user session
     const { data: session } = useSession();
@@ -98,19 +141,6 @@ export default function CreateInvoicePage() {
         }
     };
 
-    // Invoice items
-    const [invoiceItems, setInvoiceItems] = useState([
-        {
-            item: "",
-            description: "",
-            quantity: 1,
-            price: 0,
-        },
-    ]);
-
-    // Tax rate
-    const [taxRate, setTaxRate] = useState(5);
-
     // Add items
     const addItem = () => {
         setInvoiceItems([
@@ -148,13 +178,16 @@ export default function CreateInvoicePage() {
     const tax = (subtotal * taxRate) / 100;
     const total = subtotal + tax;
 
-    const [clientId, setClientId] = useState<string | null>(null);
-    const [clientName, setClientName] = useState<string | null>(null);
-    const [clientEmail, setClientEmail] = useState<string | null>(null);
-
-    const [invoiceDate, setInvoiceDate] = useState<string>(new Date().toISOString().split("T")[0]);
-    const [dueDate, setDueDate] = useState<string>(new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]);
-    const [invoiceNum, setInvoiceNum] = useState<string>(invoiceNumber);
+    const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedClientId = event.target.value;
+        clients?.clients?.forEach((client: { id: string; name: string; email: string }) => {
+            if (client.id == selectedClientId) {
+                setClientId(client.id);
+                setClientName(client.name);
+                setClientEmail(client.email);
+            }
+        });
+    };
 
     return (
         <div className="page page-create-invoice">
@@ -215,7 +248,7 @@ export default function CreateInvoicePage() {
                                     ) : (
                                         <>
                                             <label htmlFor="client-select">Select a Client</label>
-                                            <select id="client-select" name="client-select" className="form-control" onChange={(e) => setClientId(e.target.value)}>
+                                            <select id="client-select" name="client-select" className="form-control" onChange={(e) => handleClientChange(e)}>
                                                 <option value="" disabled selected>
                                                     Select a client
                                                 </option>
@@ -285,6 +318,7 @@ export default function CreateInvoicePage() {
                                         className="form-control"
                                         rows={4}
                                         placeholder="Notes"
+                                        onChange={(e) => setInvoiceNotes(e.target.value)}
                                     ></textarea>
                                 </div>
                                 <div className="form-group">
@@ -295,9 +329,30 @@ export default function CreateInvoicePage() {
                                         className="form-control"
                                         rows={4}
                                         placeholder="Terms"
+                                        onChange={(e) => setInvoiceTerms(e.target.value)}
                                     ></textarea>
+                                </div><br />
+                                <div className="page-content-block-header">
+                                    <h1>Pricing</h1>
                                 </div>
-
+                                <div className="form-group">
+                                    <label htmlFor="tax-rate">Tax Rate (%)</label>
+                                    <input
+                                        type="number"
+                                        id="tax-rate"
+                                        name="tax-rate"
+                                        className="form-control"
+                                        value={taxRate}
+                                        onChange={(e) => setTaxRate(Number(e.target.value))}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary"  onClick={() => { 
+                                        setIsSubmitting(true);
+                                    }}>
+                                        {isSubmitting ? "Creating..." : "Create Invoice"}
+                                    </button>
+                                </div>
                             </form>
                         </div>
                         <div className="page-content-block right-block invoice-preview">
@@ -313,8 +368,8 @@ export default function CreateInvoicePage() {
                                             <p className="invoice-number">Invoice #: {invoiceNumber}</p>
                                         </div>
                                         <div className="invoice-dates">
-                                            <p>Invoice Date: {invoiceDate}</p>
-                                            <p>Due Date: {dueDate}</p>
+                                            <p><span>Invoice Date:</span> {invoiceDate}</p>
+                                            <p><span>Due Date:</span> {dueDate}</p>
                                         </div>
                                     </div>
                                     <div className="invoice-bill-section preview-section">
@@ -329,13 +384,12 @@ export default function CreateInvoicePage() {
                                             <p>{clients?.clients?.find((client: { id: string }) => client.id === clientId)?.email}</p>
                                         </div>
                                     </div>
-                                    <div className="preview-section">
+                                    <div className="invoice-items-section preview-section">
                                         <h2 className="title">Items</h2>
                                         <table className="table">
                                             <thead>
                                                 <tr>
                                                     <th>Item</th>
-                                                    <th>Description</th>
                                                     <th>Quantity</th>
                                                     <th>Price</th>
                                                     <th>Total</th>
@@ -345,7 +399,6 @@ export default function CreateInvoicePage() {
                                                 {invoiceItems.map((item, index) => (
                                                     <tr key={index}>
                                                         <td>{item.item || "N/A"}</td>
-                                                        <td>{item.description || "N/A"}</td>
                                                         <td>{item.quantity}</td>
                                                         <td>${item.price.toFixed(2)}</td>
                                                         <td>${(item.quantity * item.price).toFixed(2)}</td>
@@ -354,11 +407,17 @@ export default function CreateInvoicePage() {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div className="preview-section">
-                                        <h2 className="title">Pricing</h2>
-                                        <p>Subtotal: ${subtotal.toFixed(2)}</p>
-                                        <p>Tax ({taxRate}%): ${tax.toFixed(2)}</p>
-                                        <p>Total: ${total.toFixed(2)}</p>
+                                    <div className="pricing-section preview-section">
+                                        <div className="left-pricing">
+                                            <h2 className="title">Notes</h2>
+                                            <p>{invoiceNotes || "N/A"}</p>
+                                        </div>
+                                        <div className="right-pricing">
+                                            <h2 className="title">Pricing</h2>
+                                            <p>Subtotal: <span>${subtotal.toFixed(2)}</span></p>
+                                            <p>Tax ({taxRate}%): <span>${tax.toFixed(2)}</span></p>
+                                            <p>Total: <span className="total">${total.toFixed(2)}</span></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
