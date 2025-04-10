@@ -848,7 +848,17 @@ Tables
 
         .page-content{
             border: none;
-            padding: 0px;
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
 
             .page-content-kpis{
                 display: flex;
@@ -860,7 +870,6 @@ Tables
                 .page-content-kpi{
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
 
                     background-color: $base-white;
                     box-shadow: $box-shadow;
@@ -869,6 +878,7 @@ Tables
                     padding: 20px;
 
                     margin-bottom: 20px;
+                    width: 100%;
 
                     .page-content-kpi-icon{
                         width: 60px;
@@ -917,6 +927,90 @@ Tables
             }
 
 
+        }
+    }
+}
+
+// Page: Edit Client
+.page-client-edit{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Page: View Client
+.page-client-view{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Page: Create client
+.page-create-client{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Page: Edit Invoice
+.page-edit-invoice{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
         }
     }
 }
@@ -1148,8 +1242,6 @@ Tables
     .page-inner{
 
         .page-header{
-            display: flex;
-            justify-content: space-between;
 
             .page-header-title{
 

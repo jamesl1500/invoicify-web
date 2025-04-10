@@ -151,83 +151,89 @@ export default function ClientEditPage({ params }: { params: { id: string } }) {
         <div className="page page-client-edit">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Edit Client</h1>
-                        <p>Edit client details</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <button className="btn btn-danger" onClick={deleteClient}>
-                            <span className="icon">
-                                <FontAwesomeIcon icon={faTrash} />
-                            </span>
-                            Delete
-                        </button>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Edit Client</h1>
+                            <p>Edit client details</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <button className="btn btn-danger" onClick={deleteClient}>
+                                <span className="icon">
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </span>
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit(submitForm)}>
-                    {/* Form fields go here */}
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            {...register("name")}
-                            className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Enter client name"
-                        />
-                        {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
-                    </div>
+                <div className="page-content">
+                    <div className="page-content-inner">
+                        <form onSubmit={handleSubmit(submitForm)}>
+                            {/* Form fields go here */}
+                            <div className="form-group">
+                                <label htmlFor="name">Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    {...register("name")}
+                                    className={`form-control ${errors.name ? "is-invalid" : ""}`}
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter client name"
+                                />
+                                {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
+                            </div>
 
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            {...register("email")}
-                            className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Enter client email"
-                        />
-                        {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
-                    </div>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    {...register("email")}
+                                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter client email"
+                                />
+                                {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+                            </div>
 
-                    <div className="form-group">
-                        <label htmlFor="phone">Phone</label>
-                        <input
-                            type="text"
-                            id="phone"
-                            {...register("phone")}
-                            className={`form-control ${errors.phone ? "is-invalid" : ""}`}
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="Enter client phone"
-                        />
-                        {errors.phone && <div className="invalid-feedback">{errors.phone.message}</div>}
-                    </div>
+                            <div className="form-group">
+                                <label htmlFor="phone">Phone</label>
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    {...register("phone")}
+                                    className={`form-control ${errors.phone ? "is-invalid" : ""}`}
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter client phone"
+                                />
+                                {errors.phone && <div className="invalid-feedback">{errors.phone.message}</div>}
+                            </div>
 
-                    <div className="form-group">
-                        <label htmlFor="address">Address</label>
-                        <input
-                            type="text"
-                            id="address"
-                            {...register("address")}
-                            className={`form-control ${errors.address ? "is-invalid" : ""}`}
-                            value={formData.address}
-                            onChange={handleChange}
-                            placeholder="Enter client address"
-                        />
-                        {errors.address && <div className="invalid-feedback">{errors.address.message}</div>}
+                            <div className="form-group">
+                                <label htmlFor="address">Address</label>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    {...register("address")}
+                                    className={`form-control ${errors.address ? "is-invalid" : ""}`}
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    placeholder="Enter client address"
+                                />
+                                {errors.address && <div className="invalid-feedback">{errors.address.message}</div>}
+                            </div>
+                            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                                {isSubmitting ? "Saving..." : "Save Changes"}
+                            </button>
+                            <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
+                                Cancel
+                            </button>
+                        </form>
                     </div>
-                    <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                        {isSubmitting ? "Saving..." : "Save Changes"}
-                    </button>
-                    <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
-                        Cancel
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     );

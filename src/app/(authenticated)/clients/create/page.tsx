@@ -77,75 +77,79 @@ export default function CreateClientPage() {
         <div className="page page-create-client">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Create Client</h1>
-                        <p>Create a new client for your invoices</p>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Create Client</h1>
+                            <p>Create a new client for your invoices</p>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">
-                    <form onSubmit={handleSubmit(submitForm)}>
-                        {/* Client Name */}
-                        <div className="form-group">
-                            <label htmlFor="client-name">Client Name</label>
-                            <input
-                                type="text"
-                                {...register("name")}
-                                id="client-name"
-                                className="form-control"
-                                placeholder="Enter client name"
-                            />
-                            {errors.name && <span className="text-danger">{errors.name.message}</span>}
-                        </div>
+                    <div className="page-content-inner">
+                        <form onSubmit={handleSubmit(submitForm)}>
+                            {/* Client Name */}
+                            <div className="form-group">
+                                <label htmlFor="client-name">Client Name</label>
+                                <input
+                                    type="text"
+                                    {...register("name")}
+                                    id="client-name"
+                                    className="form-control"
+                                    placeholder="Enter client name"
+                                />
+                                {errors.name && <span className="text-danger">{errors.name.message}</span>}
+                            </div>
 
-                        {/* Client Email */}
-                        <div className="form-group">
-                            <label htmlFor="client-email">Client Email</label>
-                            <p>We will send a email to your client with a link to onboard to your portal.</p>
-                            <input
-                                type="email"
-                                {...register("email")}
-                                id="client-email"
-                                className="form-control"
-                                placeholder="Enter client email"
-                            />
-                            {errors.email && <span className="text-danger">{errors.email.message}</span>}
-                        </div>
+                            {/* Client Email */}
+                            <div className="form-group">
+                                <label htmlFor="client-email">Client Email</label>
+                                <p>We will send a email to your client with a link to onboard to your portal.</p>
+                                <input
+                                    type="email"
+                                    {...register("email")}
+                                    id="client-email"
+                                    className="form-control"
+                                    placeholder="Enter client email"
+                                />
+                                {errors.email && <span className="text-danger">{errors.email.message}</span>}
+                            </div>
 
-                        {/* Client Phone */}
-                        <div className="form-group">
-                            <label htmlFor="client-phone">Client Phone</label>
-                            <input
-                                type="text"
-                                {...register("phone")}
-                                id="client-phone"
-                                className="form-control"
-                                placeholder="Enter client phone"
-                            />
-                            {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
-                        </div>
+                            {/* Client Phone */}
+                            <div className="form-group">
+                                <label htmlFor="client-phone">Client Phone</label>
+                                <input
+                                    type="text"
+                                    {...register("phone")}
+                                    id="client-phone"
+                                    className="form-control"
+                                    placeholder="Enter client phone"
+                                />
+                                {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
+                            </div>
 
-                        {/* Client Address */}
-                        <div className="form-group">
-                            <label htmlFor="client-address">Client Address</label>
-                            <input
-                                type="text"
-                                {...register("address")}
-                                id="client-address"
-                                className="form-control"
-                                placeholder="Enter client address"
-                            />
-                            {errors.address && <span className="text-danger">{errors.address.message}</span>}
-                        </div>
-                        {/* Submit Button */}
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary" disabled={submitting}>
-                                {submitting ? "Creating..." : "Create Client"}
-                            </button>
-                            <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
+                            {/* Client Address */}
+                            <div className="form-group">
+                                <label htmlFor="client-address">Client Address</label>
+                                <input
+                                    type="text"
+                                    {...register("address")}
+                                    id="client-address"
+                                    className="form-control"
+                                    placeholder="Enter client address"
+                                />
+                                {errors.address && <span className="text-danger">{errors.address.message}</span>}
+                            </div>
+                            {/* Submit Button */}
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary" disabled={submitting}>
+                                    {submitting ? "Creating..." : "Create Client"}
+                                </button>
+                                <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -46,14 +46,16 @@ export default function ClientsPage() {
         <div className="page page-clients">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Clients</h1>
-                        <p>View your clients</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <Link href="/clients/create" className="btn btn-primary">
-                            Create Client
-                        </Link>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Clients</h1>
+                            <p>View your clients</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <Link href="/clients/create" className="btn btn-primary">
+                                Create Client
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">

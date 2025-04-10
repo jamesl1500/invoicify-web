@@ -49,12 +49,14 @@ export default function PaymentsPage() {
         <div className="page page-payments">
             <div className="page-inner payments-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Payments</h1>
-                        <p>View your payments you've received</p>
-                    </div>
-                    <div className="page-header-actions">
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Payments</h1>
+                            <p>View your payments you've received</p>
+                        </div>
+                        <div className="page-header-actions">
 
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">

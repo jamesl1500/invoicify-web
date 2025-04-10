@@ -49,14 +49,16 @@ export default function ClientViewPage({ params }: { params: { id: string } }) {
         <div className="page page-client-view">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Client Details</h1>
-                        <p>View client details</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <Link href="/clients/edit/[id]" as={`/clients/edit/${clientId}`} className="btn btn-primary">
-                            Edit Client
-                        </Link>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Client Details</h1>
+                            <p>View client details</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <Link href="/clients/edit/[id]" as={`/clients/edit/${clientId}`} className="btn btn-primary">
+                                Edit Client
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">
