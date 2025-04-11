@@ -78,26 +78,28 @@ export default function PaymentViewPage({
         <div className="page page-invoice">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Payment</h1>
-                        <p>View your payment</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <Link href={`/invoices/view/${data?.payment.invoice_id}`} className="btn btn-primary">
-                            View Invoice
-                        </Link>
-                        {data?.payment.status !== "refunded" && (
-                            <Popconfirm
-                                title="Are you sure you want to refund this payment?"
-                                onConfirm={() => refundPayment(data.payment.id)}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                <button className="btn btn-danger">
-                                    Refund Payment
-                                </button>
-                            </Popconfirm>
-                        )}
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Payment</h1>
+                            <p>View your payment</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <Link href={`/invoices/view/${data?.payment.invoice_id}`} className="btn btn-primary">
+                                View Invoice
+                            </Link>
+                            {data?.payment.status !== "refunded" && (
+                                <Popconfirm
+                                    title="Are you sure you want to refund this payment?"
+                                    onConfirm={() => refundPayment(data.payment.id)}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <button className="btn btn-danger">
+                                        Refund Payment
+                                    </button>
+                                </Popconfirm>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">
