@@ -841,6 +841,27 @@ Tables
     }
 }
 
+// Page: Settings
+.page-settings{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
 // Page: Dashboard
 .page-dashboard{
 
