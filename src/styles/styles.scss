@@ -19,6 +19,8 @@ $base-gray: #6c757d;
 $primary-color: #17332d;
 $secondary-color: #6c757d;
 
+$background-gradient: linear-gradient(to right, lighten($primary-color, 10%), lighten($primary-color, 20%));
+
 $box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
 $border-radius: 0.50rem;
@@ -262,7 +264,7 @@ body.no-scroll{
     width: 100%;
 
     .header{
-        border-bottom: 1px solid #ccc;
+        //border-bottom: 1px solid #ccc;
         height: 75px;
 
         .header-inner{
@@ -867,15 +869,34 @@ Tables
 
     .page-inner{
 
+        .page-header{
+            height: 400px;
+            background: $background-gradient;
+
+            .page-header-inner{
+                background: transparent;
+                border: none;
+                box-shadow: none;
+
+                .page-header-title{
+
+                    h1{
+                        color: white;
+                    }
+
+                    p{
+                        color: white;
+                    }
+                }   
+            }
+        }
+
         .page-content{
             border: none;
+            position: relative;
+            top: -250px;
 
             .page-content-inner{
-                padding: 20px;
-                background: $base-white;
-                box-shadow: $box-shadow;
-                border-radius: $border-radius;
-                border: 1px solid #ccc;
 
                 display: block;
                 width: 100%;
@@ -885,7 +906,6 @@ Tables
                 display: flex;
                 gap: 20px;
 
-                border-bottom: 1px solid #eee;
                 margin-bottom: 20px;
 
                 .page-content-kpi{
@@ -1263,16 +1283,31 @@ Tables
     .page-inner{
 
         .page-header{
+            background: $background-gradient;
+            height: 400px;
 
-            .page-header-title{
+            .page-header-inner{
+                background: transparent;
+                box-shadow: none;
+                border: none;
 
-                h1{
-                    margin-bottom: 0px;
+                .page-header-title{
+
+                    h1{
+                        color: $base-white;
+                        margin-bottom: 0px;
+                    }
+
+                    p{
+                        color: $base-white;
+                    }
                 }
             }
         }
 
         .page-content{
+            position: relative;
+            top: -250px;
 
             .page-content-inner{
                 display: block;
@@ -1290,7 +1325,7 @@ Tables
 
                 .page-content-navigation{
                     margin-bottom: 20px;
-                    border-top: 1px solid #ccc;
+                    border-top: 1px solid rgba(0,0,0,.1);
                     padding-top: 20px;
 
                     ul.inner-nav{
@@ -1304,9 +1339,10 @@ Tables
                             margin-right: 20px;
                             padding: 10px;
                             cursor: pointer;
+                            color: $base-white;
 
                             a{
-                                color: $base-black;
+                                color: $base-white;
                                 text-decoration: none;
                                 font-size: $font-size-base;
 
@@ -1391,7 +1427,6 @@ Tables
                         background: $base-white;
                         box-shadow: $box-shadow;
                         border-radius: $border-radius;
-                        border: 1px solid #ccc;
 
                         .page-content-block-title{
 

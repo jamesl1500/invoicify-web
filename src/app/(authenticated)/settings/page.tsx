@@ -31,10 +31,32 @@ export default function SettingsPage() {
         }
     };
 
+    const fetchBusinessSettings = async (token: string) => {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/settings/companyInformation`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (response.status === 200) {
+            return response.data;
+        }
+        throw new Error("Failed to fetch settings");
+    };
+
     // Use react-query to fetch the settings
     const { data, error, isLoading } = useQuery({
         queryKey: ["settings"],
         queryFn: () => fetchSettings(session?.accessToken || ""),
+        enabled: !!session?.accessToken,
+    }) as { data: any; error: any; isLoading: boolean };
+
+    const { data: businessData, error: businessError, isLoading: businessIsLoading } = useQuery({
+        queryKey: ["businessSettings"],
+        queryFn: () => fetchBusinessSettings(session?.accessToken || ""),
         enabled: !!session?.accessToken,
     }) as { data: any; error: any; isLoading: boolean };
 
@@ -64,7 +86,7 @@ export default function SettingsPage() {
             console.error(error);
             toast.error("An error occurred while updating settings");
         }
-    }
+    };
 
     // Handle password change
     const handleChangePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -94,7 +116,34 @@ export default function SettingsPage() {
             console.error(error);
             toast.error("An error occurred while changing password");
         }
-    }
+    };
+
+    const hadleBusinessInformationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/settings/companyInformation`,
+                data,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${session?.accessToken}`,
+                    },
+                }
+            );
+            if (response.status === 200) {
+                toast.success("Business information updated successfully");
+            } else {
+                toast.error("Failed to update business information");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occurred while updating business information");
+        }
+    };
 
     return (
         <div className="page page-settings">
@@ -185,6 +234,55 @@ export default function SettingsPage() {
                                     <button type="submit" className="btn btn-primary">
                                         Change Password
                                     </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="page-content-block">
+                            <h3>Business Information</h3>
+                            <p>Update your business information</p>
+                            <form onSubmit={hadleBusinessInformationSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="company_name">Company Name</label>
+                                    <input
+                                        type="text"
+                                        id="company_name"
+                                        name="company_name"
+                                        defaultValue={businessData?.company_name}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="company_address">Company Address</label>
+                                    <input
+                                        type="text"
+                                        id="company_address"
+                                        name="company_address"
+                                        defaultValue={businessData?.company_address}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="company_email">Company Email</label>
+                                    <input
+                                        type="email"
+                                        id="company_email"
+                                        name="company_email"
+                                        defaultValue={businessData?.company_email}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="company_phone_number">Company Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        id="company_phone_number"
+                                        name="company_phone_number"
+                                        defaultValue={businessData?.company_phone_number}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary">Save Business Information</button>
                                 </div>
                             </form>
                         </div>

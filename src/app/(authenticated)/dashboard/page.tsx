@@ -54,9 +54,7 @@ const DashboardPage = () => {
                             <p>Welcome back, {session.user.name}</p>
                         </div>
                         <div className="page-header-actions">
-                            <button className="btn btn-primary" onClick={() => signOut()}>
-                                Sign Out
-                            </button>
+                            
                         </div>
                     </div>
                 </div>
