@@ -16,6 +16,7 @@ export default function ClientOnboardPage({ params }: { params: { id: string } }
     const [clientEmail, setClientEmail] = useState<string | null>(null);
     const [clientPhone, setClientPhone] = useState<string | null>(null);
     const [clientAddress, setClientAddress] = useState<string | null>(null);
+    const [clientUserData, setClientUserData] = useState<any>(null);
 
     // This is the client login page component
     const onboardToken = params.id;
@@ -46,6 +47,7 @@ export default function ClientOnboardPage({ params }: { params: { id: string } }
             setClientEmail(clientData.client.email);
             setClientPhone(clientData.client.phone);
             setClientAddress(clientData.client.address);
+            setClientUserData(clientData.client.userData);
 
             return response.data;
         } else {
@@ -104,10 +106,9 @@ export default function ClientOnboardPage({ params }: { params: { id: string } }
     };
 
     return (
-        <div className="login-page">
-            <div className="login-page-inner">
-                <h1>Client Onboarding</h1>
-                <p>Please enter your new credentials to login.</p>
+        <div className="client-onboard-page">
+            <div className="client-onboard-page-inner">
+                <p><b>{clientUserData.name}</b> has invited you to our platform to manage invoices, payments and more!</p>
                 <form onSubmit={submitForm} className="login-form">
                     <div className="form-group">
                         <input

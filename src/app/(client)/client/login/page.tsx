@@ -28,7 +28,7 @@ export default function ClientLoginPage() {
     return (
         <div className="client-login-page">
             <div className="client-login-page-inner">
-                <h1>Client Login</h1>
+                <h1>Login</h1>
                 <p>Please enter your credentials to log in.</p>
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="form-group">

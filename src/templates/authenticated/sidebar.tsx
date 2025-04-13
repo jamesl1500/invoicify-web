@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faHome, faFileInvoice, faUser, faCog, faXmark, faMoneyBill, faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faFileInvoice, faUser, faCog, faXmark, faMoneyBill, faCreditCard, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -181,16 +181,20 @@ export default function Sidebar() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/settings">
-                                            <FontAwesomeIcon icon={faCog} />
-                                            <span>Settings</span>
-                                        </Link>
+                                        <Tooltip title="Settings" placement="right">
+                                            <Link href="/settings">
+                                                <FontAwesomeIcon icon={faCog} />
+                                                <span>Settings</span>
+                                            </Link>
+                                        </Tooltip>
                                     </li>
                                     <li>
-                                        <Link href="/logout" onClick={handleLogout}>
-                                            <FontAwesomeIcon icon={faXmark} />
-                                            <span>Logout</span>
-                                        </Link>
+                                        <Tooltip title="Logout" placement="right">
+                                            <Link href="/logout" onClick={handleLogout}>
+                                                <FontAwesomeIcon icon={faDoorOpen} />
+                                                <span>Logout</span>
+                                            </Link>
+                                        </Tooltip>
                                     </li>
                                 </>
                             ) : (
@@ -214,7 +218,7 @@ export default function Sidebar() {
                                     <li>
                                         <Tooltip title="Logout" placement="right">
                                             <Link href="/logout" onClick={handleLogout}>
-                                                <FontAwesomeIcon icon={faXmark} />
+                                                <FontAwesomeIcon icon={faDoorOpen} />
                                                 <span>Logout</span>
                                             </Link>
                                         </Tooltip>
