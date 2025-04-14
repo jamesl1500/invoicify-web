@@ -2032,6 +2032,62 @@ Tables
     }
 }
 
+// Page: Client payment view
+.page-client-payment-view{
+
+    .page-inner{
+
+        .page-content{
+
+            .page-content-inner{
+                padding: 20px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Page: Payment Methods
+.page-payment-methods{
+
+    .page-content{
+        padding: 20px;
+
+        display: block;
+        width: 100%;
+
+        .page-content-inner{
+            padding: 20px;
+            background: $base-white;
+            box-shadow: $box-shadow;
+            border-radius: $border-radius;
+            border: 1px solid #ccc;
+
+            width: 100%;
+
+            display: flex;
+            gap: 20px;
+
+            .page-content-inner-block{
+                width: 100%;
+            }
+
+            .page-content-inner-block.new-payment-method{
+                border:1px solid #eee;
+                border-radius: $border-radius;
+
+                padding: 20px;
+            }
+        }
+    }
+}
+
 //Page: Client Onboarding
 .client-onboard-page{
     width: 500px;

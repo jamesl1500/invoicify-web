@@ -166,14 +166,16 @@ export default function PayInvoicePage({ params }: { params: { id: string } }) {
         <div className="page page-invoice">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Pay Invoice</h1>
-                        <p>Pay your invoice</p>
-                    </div>
-                    <div className="page-header-actions">
-                        <Link href={`/client/invoices/view/${invoiceId}`} className="btn btn-secondary">
-                            Back to Invoice
-                        </Link>
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Pay Invoice</h1>
+                            <p>Pay your invoice</p>
+                        </div>
+                        <div className="page-header-actions">
+                            <Link href={`/client/invoices/view/${invoiceId}`} className="btn btn-secondary">
+                                Back to Invoice
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">

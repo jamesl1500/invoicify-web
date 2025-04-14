@@ -76,24 +76,26 @@ export default function ViewInvoicePage({ params }: { params: { id: string } }) 
         <div className="page page-invoice">
             <div className="page-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Invoice</h1>
-                        <p>View your invoice</p>
-                    </div>
-                    <div className="page-header-actions">
-                        {data.invoice.status === "paid" ? (
-                            <Link href={`/client/invoices/view/${invoiceId}/receipt`} className="btn btn-success">
-                                View Receipt
-                            </Link>
-                        ) : (
-                            <Link href={`/client/invoices/pay/${invoiceId}`} className="btn btn-primary">
-                                Pay Invoice
-                            </Link>
-                        )}
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Invoice</h1>
+                            <p>View your invoice</p>
+                        </div>
+                        <div className="page-header-actions">
+                            {data.invoice.status === "paid" ? (
+                                <Link href={`/client/invoices/view/${invoiceId}/receipt`} className="btn btn-success">
+                                    View Receipt
+                                </Link>
+                            ) : (
+                                <Link href={`/client/invoices/pay/${invoiceId}`} className="btn btn-primary">
+                                    Pay Invoice
+                                </Link>
+                            )}
 
-                        <Link href="/client/invoices" className="btn btn-secondary">
-                            Back to Invoices
-                        </Link>
+                            <Link href="/client/invoices" className="btn btn-secondary">
+                                Back to Invoices
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">

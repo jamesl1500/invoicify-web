@@ -121,8 +121,12 @@ function SaveCardForm(){
 
     return (
         <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button type="submit" disabled={!stripe}>Save Card</button>
+            <div className="form-group">
+                <CardElement />
+            </div>
+            <div className="form-group">
+                <button className="btn btn-sm" type="submit" disabled={!stripe}>Save Card</button>
+            </div>
         </form>
     );
 }
@@ -190,46 +194,51 @@ export default function PaymentMethodsPage() {
             <div className="page page-payment-methods">
                 <div className="page-inner">
                     <div className="page-header">
-                        <div className="page-header-title">
-                            <h1>Payment Methods</h1>
-                            <p>Manage your payment methods</p>
+                        <div className="page-header-inner">
+                            <div className="page-header-title">
+                                <h1>Payment Methods</h1>
+                                <p>Manage your payment methods</p>
+                            </div>
                         </div>
                     </div>
                     <div className="page-content">
                         <div className="page-content-inner">
-                            <h2>Payment Methods</h2>
-                            <p>Manage your payment methods</p>
-                            {loading ? (
-                                <Loading text="Loading your payment methods..." />
-                            ) : (
-                                <div className="payment-methods">
-                                    {cards.length > 0 ? (
-                                        cards.map((card) => (
-                                            <div key={card.id} className="payment-method">
-                                                <div className="payment-method-icon">
-                                                    {brandIconMap[card.brand] || brandIconMap["default"]}
-                                                </div>
-                                                <div className="payment-method-details">
-                                                    <div className="payment-method-name">
-                                                        <p>{card.brand} ending in {card.last4}</p>
-                                                        <p className="expiry">Expires {card.exp_month}/{card.exp_year}</p>
+                            <div className="page-content-inner-block">
+                                <h2>Payment Methods</h2>
+                                <p>Manage your payment methods</p>
+                                {loading ? (
+                                    <Loading text="Loading your payment methods..." />
+                                ) : (
+                                    <div className="payment-methods">
+                                        {cards.length > 0 ? (
+                                            cards.map((card) => (
+                                                <div key={card.id} className="payment-method">
+                                                    <div className="payment-method-icon">
+                                                        {brandIconMap[card.brand] || brandIconMap["default"]}
                                                     </div>
-                                                    <div className="payment-method-actions">
-                                                        <button className="btn btn-sm btn-danger" onClick={() => deleteCard(card.id)}>Delete</button>
+                                                    <div className="payment-method-details">
+                                                        <div className="payment-method-name">
+                                                            <p>{card.brand} ending in {card.last4}</p>
+                                                            <p className="expiry">Expires {card.exp_month}/{card.exp_year}</p>
+                                                        </div>
+                                                        <div className="payment-method-actions">
+                                                            <button className="btn btn-sm btn-danger" onClick={() => deleteCard(card.id)}>Delete</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No saved payment methods found.</p>
-                                    )}
+                                            ))
+                                        ) : (
+                                            <p>No saved payment methods found.</p>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="page-content-inner-block new-payment-method">
+                                <div className="new-payment-methods">
+                                    <h3>Save a new card</h3>
+                                    <p>Save a new card to your account for future payments.</p>
+                                    <SaveCardForm />
                                 </div>
-                            )}
-
-                            <div className="new-payment-methods">
-                                <h3>Save a new card</h3>
-                                <p>Save a new card to your account for future payments.</p>
-                                <SaveCardForm />
                             </div>
                         </div>
                     </div>
