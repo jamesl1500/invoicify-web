@@ -47,12 +47,14 @@ export default function ClientInvoices() {
         <div className="page page-client-invoices">
             <div className="page-inner client-invoices-inner">
                 <div className="page-header">
-                    <div className="page-header-title">
-                        <h1>Invoices</h1>
-                        <p>View your invoices</p>
-                    </div>
-                    <div className="page-header-actions">
+                    <div className="page-header-inner">
+                        <div className="page-header-title">
+                            <h1>Invoices</h1>
+                            <p>View your invoices</p>
+                        </div>
+                        <div className="page-header-actions">
 
+                        </div>
                     </div>
                 </div>
                 <div className="page-content">
