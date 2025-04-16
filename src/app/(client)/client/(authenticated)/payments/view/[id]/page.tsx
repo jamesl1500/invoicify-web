@@ -23,7 +23,7 @@ export default function PaymentViewPage({ params }: { params: { id: string } }) 
         );
 
         if (response.status === 200) {
-            return response.data.payment;
+            return response.data;
         } else {
             throw new Error("Failed to fetch payment");
         }
@@ -58,9 +58,9 @@ export default function PaymentViewPage({ params }: { params: { id: string } }) 
                         ) : (
                             <div className="payment-details">
                                 <h2>Payment Details</h2>
-                                <p><strong>ID:</strong> {payment?.id}</p>
-                                <p><strong>Amount:</strong> {payment?.amount}</p>
-                                <p><strong>Status:</strong> {payment?.status}</p>
+                                <p><strong>ID:</strong> {payment?.payment.id}</p>
+                                <p><strong>Amount:</strong> ${payment?.payment.amount}</p>
+                                <p><strong>Status:</strong> {payment?.payment.status}</p>
                                 {/* Add more payment details as needed */}
                                 <h3>Payment Method</h3>
                                 <p><strong>Type:</strong> {payment?.payment_method?.type}</p>

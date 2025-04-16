@@ -264,7 +264,7 @@ body.no-scroll{
     width: 100%;
 
     .header{
-        //border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid rgba(0,0,0,.1);
         height: 75px;
 
         .header-inner{
@@ -978,7 +978,7 @@ Tables
     .page-inner{
 
         .page-header{
-            height: 400px;
+            height: 450px;
             background: $background-gradient;
 
             .page-header-inner{
@@ -1002,7 +1002,7 @@ Tables
         .page-content{
             border: none;
             position: relative;
-            top: -250px;
+            top: -300px;
 
             .page-content-inner{
 
@@ -2280,6 +2280,41 @@ Tables
 
         form{
 
+        }
+    }
+}
+
+// Page: Conversations (Clients)
+.client-conversations-page{
+
+    .page-inner{
+
+        .page-header{
+
+        }
+
+        .page-content{
+            display: flex;
+            gap: 20px;
+
+            .page-content-left{
+                width: 250px;
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+                padding: 20px;
+            }
+
+            .page-content-right{
+                width: calc(100% - 250px);
+                background: $base-white;
+                box-shadow: $box-shadow;
+                border-radius: $border-radius;
+                border: 1px solid #ccc;
+                padding: 20px;
+
+            }
         }
     }
 }
