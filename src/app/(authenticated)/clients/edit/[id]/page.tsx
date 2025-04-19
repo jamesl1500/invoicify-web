@@ -12,8 +12,10 @@ export const metadata = {
     description: "Edit an existing client",
 };
 
-export default function ClientEditPage({ params }: ClientEditPageProps) {
+const ClientEditPage = async ({ params }: ClientEditPageProps) => {
     const clientId = params.id;
 
     return <EditClientPage clientId={clientId} />;
 }
+
+export default ClientEditPage;
