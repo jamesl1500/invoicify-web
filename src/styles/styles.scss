@@ -2318,3 +2318,87 @@ Tables
         }
     }
 }
+
+.page-pay-invoice{
+
+    .page-inner{
+
+        .page-content{
+            
+            .page-content-inner{
+                display: flex;
+                align-items: flex-start; 
+                gap: 20px;
+
+                .pay-invoice-left{
+                    background: white;
+                    box-shadow: $box-shadow;
+                    border-radius: $border-radius;
+                    border: 1px solid #ccc;
+
+                    width: 100%;
+
+                    .pay-invoice-left-inner{
+                        padding: 20px;
+
+                    }
+                }
+
+                .pay-invoice-right{
+                    background: $primary-color;
+                    padding: 20px;
+                    border-radius: $border-radius;
+                    border: 1px solid rgba(0,0,0,.1);
+                    box-shadow: $box-shadow;
+                    width: 100%;
+
+                    .pay-invoice-right-inner{
+
+                       .checkout-summary{
+
+                            h2{
+                                font-size: $font-size-lg;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-white;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+
+                                margin-bottom: 20px;
+                            }
+
+                            p{
+                                font-size: $font-size-md;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-white;
+                            }
+                       }
+
+                       .payment-methods{
+
+                            h2{
+                                font-size: $font-size-lg;
+                                font-weight: $font-weight-normal;
+
+                                color: $base-white;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+
+                                margin-bottom: 20px;
+                            }
+
+                            form{
+
+                                button.submit-btn{
+                                    background: white;
+                                    color: $base-black;
+                                }
+                            }
+                       }
+                    }
+                }
+            }
+        }
+    }
+}

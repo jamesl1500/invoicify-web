@@ -18,7 +18,7 @@ const ClientAuthWrapper: React.FC<ClientAuthWrapperProps> = ({ children }) => {
             return;
         }else if (status === "unauthenticated" || !session || !session.accessToken) {
             console.log("Session is unauthenticated or access token is missing. Redirecting to login...");
-            router.push("/login");
+            router.push("/client/login");
             return;
         } else if (status === "authenticated" && session.accessToken) {
             // User is authenticated and has an access token, do nothing
@@ -30,7 +30,7 @@ const ClientAuthWrapper: React.FC<ClientAuthWrapperProps> = ({ children }) => {
     if (!session || !session.accessToken) {
         return <Loading text="Loading your client portal..." />;
     }
-
+ 
     return <>{children}</>;
 };
 

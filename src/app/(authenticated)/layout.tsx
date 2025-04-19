@@ -29,6 +29,7 @@ import { useEffect } from "react";
 import { signOut } from "next-auth/react";
 
 import { Providers } from "../providers";
+import UserAuthWrapper from "@/wrappers/UserAuthWrapper";
 
 export default function RootLayout({
   children,
@@ -53,7 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionProviderWrapper>
-
+          <UserAuthWrapper>
           {/* This is the sidebar component */}
           <div className="sidebar-holder">
             <Sidebar />
@@ -75,6 +76,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </div>
+          </UserAuthWrapper>
         </SessionProviderWrapper>
       </body>
     </html>
