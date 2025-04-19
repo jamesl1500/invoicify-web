@@ -8,8 +8,10 @@ export const metadata: Metadata = {
     description: "View client details",
 };
 
-export default function ClientViewPage({ params }: { params: { id: number } }) {
-    const clientId = params.id;
+const ClientViewPage = async (props: {params: Promise<{ id: string }>;}) => {
+    const clientId = await props.params.id;
 
     return <ViewClientPage clientId={clientId} />;
 }
+
+export default ClientViewPage;

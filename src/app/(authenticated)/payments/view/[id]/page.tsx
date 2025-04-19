@@ -6,10 +6,12 @@ export const metadata: Metadata = {
     description: "View payment details",
 };
 
-export default function PaymentViewPage({params,}: {params: { id: string };}) {
+const PaymentViewPage = async (props: {params: Promise<{ id: string }>;}) => {
 
     // Get the payment ID from the URL
-    const paymentId = params.id;
+    const paymentId = await props.params.id;
 
     return <ViewPaymentPage paymentId={paymentId} />;
 }
+
+export default PaymentViewPage;

@@ -6,8 +6,10 @@ export const metadata: Metadata = {
     description: "View invoice details",
 };
 
-export default function ViewInvoice({ params }: { params: { id: string } }) {
-    const invoiceId = params.id;
+const ViewInvoice = async (props: {params: Promise<{ id: string }>;}) => {
+    const invoiceId = await props.params.id;
 
     return <ViewInvoicePage invoiceId={invoiceId} />;
 }
+
+export default ViewInvoice;

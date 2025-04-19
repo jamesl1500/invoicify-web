@@ -6,8 +6,10 @@ export const metadata: Metadata = {
     description: "Pay an invoice",
 };
 
-export default function PayInvoice({ params }: { params: { id: string } }) {
-    const invoiceId = params.id;
+const PayInvoice = async (props: {params: Promise<{ id: string }>;}) => {
+    const invoiceId = props.params.id;
 
     return <PayInvoicePage invoiceId={invoiceId} />;
 }
+
+export default PayInvoice;
