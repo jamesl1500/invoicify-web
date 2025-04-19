@@ -13,4 +13,4 @@ const ClientOnboard = async (props: {params: Promise<{ id: string }>;}) => {
     return <ClientOnboardPage onboardToken={onboardToken} />;
 }
 
-export default ClientOnboardPage;
+export default ClientOnboard;
