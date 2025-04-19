@@ -8,4 +8,5 @@ export const metadata: Metadata = {
 
 export default function PaymentMethodsPage() {
     
-    return <ViewPaymentMethodsPage />
+    return <ViewPaymentMethodsPage />;
+}
