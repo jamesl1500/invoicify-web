@@ -80,7 +80,7 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formData = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget as HTMLFormElement);
         const clientId = formData.get("client-select");
         const invoiceNumber = formData.get("invoice-number");
         const invoiceDate = formData.get("invoice-date");
