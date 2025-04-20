@@ -64,7 +64,14 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
         }
     }, [invoiceId, session]);
 
-    const { data: clients } = useQuery({
+    interface Client {
+        id: string;
+        name: string;
+    }
+
+    const { data: clients } = useQuery<{
+        clients: Client[];
+    }>({
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: !!session?.accessToken,
@@ -73,7 +80,7 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formData = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget as HTMLFormElement);
         const clientId = formData.get("client-select");
         const invoiceNumber = formData.get("invoice-number");
         const invoiceDate = formData.get("invoice-date");
@@ -157,7 +164,7 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
                     <div className="page-content-inner">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label htmlFor="client-select">Select Client</label>
+                                    {clients?.clients.map((client: Client) => (
                                 <select
                                     id="client-select"
                                     name="client-select"

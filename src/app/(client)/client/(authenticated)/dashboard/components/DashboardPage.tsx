@@ -86,7 +86,7 @@ const DashboardPage = () => {
                                 </div>
                                 <div className="page-content-kpi-content">
                                     <div className="page-content-kpi-title">
-                                        <h1>Amout you've paid</h1>
+                                        <h1>Amount you've paid</h1>
                                         <p>Total amount paid by you</p>
                                     </div>
                                     <div className="page-content-kpi-value">

@@ -252,7 +252,7 @@ export default function CreateInvoicePage() {
                                                 <option value="" disabled selected>
                                                     Select a client
                                                 </option>
-                                                {clients?.clients?.map((client: { id: string; name: string }) => (
+                                                {clients?.clients?.map((client: { id: string; name: string; email: string; }) => (
                                                     <option key={client.id} value={client.id}>
                                                         {client.name} - {client.email}
                                                     </option>
