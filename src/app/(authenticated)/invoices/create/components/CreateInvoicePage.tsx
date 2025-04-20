@@ -96,7 +96,7 @@ export default function CreateInvoicePage() {
         event.preventDefault();
 
         // Get the form data
-        const invoiceData = new FormData(event.currentTarget);
+        const invoiceData = new FormData(event.currentTarget as HTMLFormElement);
         const clientId = invoiceData.get("client-select");
         const invoiceNumber = invoiceData.get("invoice-number");
         const invoiceDate = invoiceData.get("invoice-date");
