@@ -39,6 +39,8 @@ const clientSchema = z.object({
     address: z.string().min(5, "Address must be at least 5 characters."),
 });
 
+type ClientFormData = z.infer<typeof clientSchema>;
+
 export default function EditClientPage({ clientId }: { clientId: string }) {
     const { data: session } = useSession();
     //const clientId = id.clientId;
@@ -97,6 +99,8 @@ export default function EditClientPage({ clientId }: { clientId: string }) {
                 phone: data.client.phone,
                 address: data.client.address,
             });
+
+            console.log("Client data loaded:", data.client);
         }
     }, [data]);
 
