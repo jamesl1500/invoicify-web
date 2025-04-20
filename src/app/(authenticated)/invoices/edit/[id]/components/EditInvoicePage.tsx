@@ -80,7 +80,7 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formData = new FormData(event.currentTarget as HTMLFormElement);
+        const formData = new FormData(event.currentTarget);
         const clientId = formData.get("client-select");
         const invoiceNumber = formData.get("invoice-number");
         const invoiceDate = formData.get("invoice-date");
@@ -164,14 +164,14 @@ export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId:
                     <div className="page-content-inner">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                    {clients?.clients.map((client: Client) => (
+                                <label htmlFor="client-select">Select Client</label>
                                 <select
                                     id="client-select"
                                     name="client-select"
                                     className="form-control"
                                     defaultValue={invoiceData.clientId}
                                 >
-                                    {clients?.clients.map((client) => (
+                                    {clients?.clients.map((client: Client) => (
                                         <option key={client.id} value={client.id}>
                                             {client.name}
                                         </option>
