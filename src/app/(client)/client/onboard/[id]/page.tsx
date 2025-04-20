@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 
 const ClientOnboard = async (props: {params: Promise<{ id: string }>;}) => {
     // This is the client login page component
-    const onboardToken = await props.params.id;
+    const params = await props.params;
+    const onboardToken = params.id;
 
     return <ClientOnboardPage onboardToken={onboardToken} />;
 }

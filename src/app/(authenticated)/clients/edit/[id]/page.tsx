@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const ClientEditPage = async (props: {params: Promise<{ id: string }>;}) => {
-    const clientId = await props.params.id;
+    const { id: clientId } = await props.params;
 
     return <EditClientPage clientId={clientId} />;
 }

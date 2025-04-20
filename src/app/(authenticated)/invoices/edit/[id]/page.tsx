@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const EditInvoice = async (props: {params: Promise<{ id: string }>;}) => {
-    const invoiceId = await props.params.id;
+    const { id: invoiceId } = await props.params;
 
     return <EditInvoicePage invoiceId={invoiceId} />;
 }

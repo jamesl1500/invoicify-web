@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const ClientViewPage = async (props: {params: Promise<{ id: string }>;}) => {
-    const clientId = await props.params.id;
+    const { id: clientId } = await props.params;
 
     return <ViewClientPage clientId={clientId} />;
 }
