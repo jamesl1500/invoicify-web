@@ -38,7 +38,7 @@ const DashboardPage = () => {
         queryKey: ["dashboard"],
         queryFn: () => fetchDashboardData(session?.accessToken || ""),
         enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
-    }) as { data: any, error: any, isLoading: boolean };
+    });
 
     if (status === "loading" || !session || isLoading) {
         return <Loading text="Loading your dashboard..." />;

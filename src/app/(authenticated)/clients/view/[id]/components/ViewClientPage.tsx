@@ -27,15 +27,14 @@ const fetchClient = async (clientId: string, token: string) => {
     }
 }
 
-export default function ViewClientPage(id: number) {
+export default function ViewClientPage({ clientId }: { clientId: string }) {
     const { data: session } = useSession();
-    const clientId = id.clientId;
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["client", clientId],
         queryFn: () => fetchClient(clientId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Client | undefined; error: any; isLoading: boolean };
+    });
 
     if (isLoading) {
         return <Loading text="Loading your client"/>;

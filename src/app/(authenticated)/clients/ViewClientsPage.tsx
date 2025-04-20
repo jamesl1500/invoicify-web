@@ -36,7 +36,7 @@ export default function ViewClientsPage() {
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
-    }) as { data: any, error: any, isLoading: boolean };
+    });
 
     if (status === "loading" || isLoading) {
         return <Loading text="Loading your clients"/>;

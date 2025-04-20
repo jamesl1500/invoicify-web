@@ -10,16 +10,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useState } from "react";
 
-const ClientOnboardPage =  (onboardTokens: string) => {
+const ClientOnboardPage =  ({ onboardToken }: { onboardToken: string }) => {
     const [clientId, setClientId] = useState<string | null>(null);
     const [clientName, setClientName] = useState<string | null>(null);
     const [clientEmail, setClientEmail] = useState<string | null>(null);
     const [clientPhone, setClientPhone] = useState<string | null>(null);
     const [clientAddress, setClientAddress] = useState<string | null>(null);
     const [clientUserData, setClientUserData] = useState<any>(null);
-
-    // This is the client login page component
-    const onboardToken = onboardTokens.onboardToken;
 
     // Check if the onboardToken is present
     if (!onboardToken) {
@@ -59,7 +56,7 @@ const ClientOnboardPage =  (onboardTokens: string) => {
     const { data, error, isLoading } = useQuery({
         queryKey: ["clientData", onboardToken],
         queryFn: fetchClientData,
-    }) as { data: any; error: any; isLoading: boolean };
+    });
 
     // Handle loading state
     if (isLoading) {

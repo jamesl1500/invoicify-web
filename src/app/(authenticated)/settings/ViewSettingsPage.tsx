@@ -52,13 +52,13 @@ export default function ViewSettingsPage() {
         queryKey: ["settings"],
         queryFn: () => fetchSettings(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: any; error: any; isLoading: boolean };
+    });
 
     const { data: businessData, error: businessError, isLoading: businessIsLoading } = useQuery({
         queryKey: ["businessSettings"],
         queryFn: () => fetchBusinessSettings(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: any; error: any; isLoading: boolean };
+    });
 
     // Handle basic information 
     const handleBasicInformationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

@@ -89,7 +89,7 @@ export default function CreateInvoicePage() {
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: { id: string; name: string }[] | undefined, error: any, isLoading: boolean };
+    });
 
     // Create invoice form submit
     const handleSubmit = async (event: React.FormEvent) => {

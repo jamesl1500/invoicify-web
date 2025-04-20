@@ -12,10 +12,8 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { Popconfirm } from "antd";
 
-export default function ViewInvoicePage(id: string) {
+export default function ViewInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
     const { data: session } = useSession();
-
-    const invoiceId = id.invoiceId;
 
     // Function to fetch the invoice data
     const fetchInvoice = async (invoiceId: string, token: string) => {
@@ -67,7 +65,7 @@ export default function ViewInvoicePage(id: string) {
         queryKey: ["invoice", invoiceId],
         queryFn: () => fetchInvoice(invoiceId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Invoice | undefined; error: any; isLoading: boolean };
+    });
 
     // Delete invoice function
     const deleteInvoice = async () => {

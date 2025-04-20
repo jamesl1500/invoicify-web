@@ -23,10 +23,8 @@ const fetchClients = async (token: string) => {
     }
 };
 
-export default function EditInvoicePage(id: string) {
+export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
     const { data: session } = useSession();
-
-    const invoiceId = id.invoiceId;
 
     const [invoiceData, setInvoiceData] = useState<any>(null);
     const [invoiceItems, setInvoiceItems] = useState([
@@ -70,7 +68,7 @@ export default function EditInvoicePage(id: string) {
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: { id: string; name: string }[] | undefined };
+    });
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();

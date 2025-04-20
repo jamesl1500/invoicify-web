@@ -11,12 +11,9 @@ import Loading from "@/components/screens/Loading";
 import { Popconfirm } from "antd";
 import { toast } from "react-toastify";
 
-export default function ViewPaymentPage(id: string) {
+export default function ViewPaymentPage({ paymentId }: { paymentId: { invoiceId: string } }) {
     // Get the session
     const { data: session } = useSession();
-
-    // Get the payment ID from the URL
-    const paymentId = id.paymentId;
 
     // Fetch the payment details
     const fetchPayment = async (paymentId: string, token: string) => {
@@ -41,7 +38,7 @@ export default function ViewPaymentPage(id: string) {
         queryKey: ["payment", paymentId],
         queryFn: () => fetchPayment(paymentId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: any; error: any; isLoading: boolean };
+    });
 
     const refundPayment = async (paymentId: string) => {
         const response = await axios.post(

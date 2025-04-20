@@ -36,10 +36,8 @@ interface Props {
     onSelete: (methodId: string) => void;
 }
 
-export default function PayInvoicePage(id: string) {
+export default function PayInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
     const { data: session } = useSession();
-
-    const invoiceId = id.invoiceId;
 
     // Function to fetch the invoice data
     const fetchInvoice = async (invoiceId: string, token: string) => {
@@ -129,7 +127,7 @@ export default function PayInvoicePage(id: string) {
         queryKey: ["invoice", invoiceId],
         queryFn: () => fetchInvoice(invoiceId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Invoice | undefined; error: any; isLoading: boolean };
+    });
 
     // This is the view invoice page
     if( isLoading || !session) {

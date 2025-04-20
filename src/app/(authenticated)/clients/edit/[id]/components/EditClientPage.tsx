@@ -47,7 +47,7 @@ export default function EditClientPage({ clientId }: { clientId: string }) {
         queryKey: ["client", clientId],
         queryFn: () => fetchClient(clientId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Client | undefined; error: any; isLoading: boolean };
+    });
 
     const submitForm = async (formData: ClientFormData) => {
         // Handle form submission logic
