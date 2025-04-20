@@ -39,9 +39,9 @@ const clientSchema = z.object({
     address: z.string().min(5, "Address must be at least 5 characters."),
 });
 
-export default function EditClientPage(id: string) {
+export default function EditClientPage({ clientId }: { clientId: string }) {
     const { data: session } = useSession();
-    const clientId = id.clientId;
+    //const clientId = id.clientId;
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["client", clientId],
