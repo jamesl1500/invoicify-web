@@ -1,13 +1,24 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-import { AuthOptions, SessionStrategy, User, DefaultSession } from "next-auth";
+import { AuthOptions, SessionStrategy } from "next-auth";
 
 // Extend the User type to include the token property
 declare module "next-auth" {
     interface User {
         token?: string;
         role?: string; // Add role property to User
+    }
+    interface Session {
+        user: {
+            id: string;
+            name: string;
+            email: string;
+            role: string;
+            token: string;
+        };
+        accessToken?: string;
+        role: string;
     }
 }
 
@@ -100,9 +111,9 @@ export const authOptions: AuthOptions = {
             return token;
         },
         async session({ session, token }) {
-            session.user = token.user as { id: string; name: string; email: string; role: string; accessToken: string };
-            session.accessToken = token.accessToken; // Attach Laravel token to session
-            session.role = token.user.role; // Attach user role to session
+            session.user = token.user as { id: string; name: string; email: string; role: string; token: string };
+            session.accessToken = token.accessToken as string; // Attach Laravel token to session
+            session.role = (token.user as { role: string }).role; // Attach user role to session
             return session;
         }
     },
@@ -123,5 +134,5 @@ export const authOptions: AuthOptions = {
         strategy: "jwt" as SessionStrategy,
     },
     secret: process.env.NEXTAUTH_SECRET,
-    pages: { signIn: "/login", clientSignIn: "/client/login" },
+    pages: { signIn: "/auth/login", clientSignIn: "/client/login" },
 };
