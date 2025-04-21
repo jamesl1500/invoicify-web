@@ -56,7 +56,9 @@ export default function ViewInvoicePage({ invoiceId }: { invoiceId: string }) {
         const clickedLink = event.currentTarget;
 
         if (clickedLink) {
-            clickedLink.parentElement.classList.add("active");
+            if (clickedLink.parentElement) {
+                clickedLink.parentElement.classList.add("active");
+            }
         }
     };
 
