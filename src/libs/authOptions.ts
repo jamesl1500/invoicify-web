@@ -1,7 +1,9 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-export const authOptions = {
+import { AuthOptions, SessionStrategy } from "next-auth";
+
+export const authOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             id: "user-login",
@@ -110,7 +112,7 @@ export const authOptions = {
         }
     },
     session: {
-        strategy: "jwt"
+        strategy: "jwt" as SessionStrategy,
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: { signIn: "/login", clientSignIn: "/client/login" },
