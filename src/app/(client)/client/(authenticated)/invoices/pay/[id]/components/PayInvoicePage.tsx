@@ -58,7 +58,7 @@ export default function PayInvoicePage({ invoiceId }: { invoiceId: string }) {
         }
     };
 
-    const [cards, setCards] = useState<any[]>([]);
+    const [cards, setCards] = useState<PaymentMethod[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -184,7 +184,7 @@ export default function PayInvoicePage({ invoiceId }: { invoiceId: string }) {
                                             {cards.map((card) => (
                                                 <div key={card.id} className="payment-method">
                                                     <div className="payment-method-icon">
-                                                        {brandIconMap[card.brand] || brandIconMap["default"]}
+                                                        {brandIconMap[card.brand as keyof typeof brandIconMap] || brandIconMap["default"]}
                                                     </div>
                                                     <div className="payment-method-details">
                                                         <div className="payment-method-name">

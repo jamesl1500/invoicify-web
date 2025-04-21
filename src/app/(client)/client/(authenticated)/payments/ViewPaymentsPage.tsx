@@ -7,6 +7,18 @@ import axios from "axios";
 
 import Link from "next/link";
 
+interface Payment {
+    id: string;
+    invoice: {
+        invoice_number: string;
+    };
+    user: {
+        name: string;
+    };
+    amount: number;
+    status: string;
+}
+
 export default function ViewPaymentsPage()
 {
     const { data: session } = useSession();
@@ -67,7 +79,7 @@ export default function ViewPaymentsPage()
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {payments.map((payment: any) => (
+                                    {payments.map((payment: Payment) => (
                                         <tr key={payment.id}>
                                             <td>{payment.invoice.invoice_number}</td>
                                             <td>{payment.user.name}</td>

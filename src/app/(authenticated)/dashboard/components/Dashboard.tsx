@@ -14,6 +14,16 @@ import { useQuery } from "@tanstack/react-query";
 
 import Link from "next/link";
 
+interface Invoice {
+    id: string;
+    invoice_number: string;
+    user: {
+        name: string;
+    };
+    status: string;
+    total_amount: number;
+}
+
 // Fetch dashboard data function
 const fetchDashboardData = async (token: string) => {
     const response = await axios.get(
@@ -37,7 +47,7 @@ const DashboardPageClient = () => {
         queryKey: ["dashboard"],
         queryFn: () => fetchDashboardData(session?.accessToken || ""),
         enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
-    }) as { data: any, error: any, isLoading: boolean };
+    });
 
     if (status === "loading" || !session || isLoading) {
         return <Loading text="Loading your dashboard..." />;
@@ -122,7 +132,7 @@ const DashboardPageClient = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.recentInvoices.map((invoice: any) => (
+                                        {data.recentInvoices.map((invoice: Invoice) => (
                                             <tr key={invoice.id}>
                                                 <td>{invoice.invoice_number}</td>
                                                 <td>{invoice.status}</td>

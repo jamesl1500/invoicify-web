@@ -1,9 +1,6 @@
 "use client";
 
-import Link from "next/link";
-
 import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
 
 import axios from "axios";
 
@@ -48,7 +45,6 @@ function SaveCardForm(){
     const elements = useElements();
     const stripe = useStripe();
 
-    const [clientSecret, setClientSecret] = useState("");
     const [customerId, setCustomerId] = useState("");
 
     useEffect(() => {
@@ -62,7 +58,6 @@ function SaveCardForm(){
             }
         ).then((response) => {
             if (response.status === 200) {
-                setClientSecret(response.data.client_secret);
                 setCustomerId(response.data.customer_id);
             } else {
                 console.error("Failed to fetch client secret");
@@ -134,13 +129,8 @@ function SaveCardForm(){
 export default function ViewPaymentMethodsPage() {
     const { data: session } = useSession();
 
-    const [cards, setCards] = useState<any[]>([]);
-    const [selectedCard, setSelectedCard] = useState<string | null>(null);
+    const [cards, setCards] = useState<PaymentMethod[]>([]);
     const [loading, setLoading] = useState(true);
-
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCard(event.target.value);                            
-    }                   
 
     useEffect(() => {
         if (!session?.accessToken) {
@@ -214,7 +204,7 @@ export default function ViewPaymentMethodsPage() {
                                             cards.map((card) => (
                                                 <div key={card.id} className="payment-method">
                                                     <div className="payment-method-icon">
-                                                        {brandIconMap[card.brand] || brandIconMap["default"]}
+                                                        {brandIconMap[card.brand as keyof typeof brandIconMap] || brandIconMap["default"]}
                                                     </div>
                                                     <div className="payment-method-details">
                                                         <div className="payment-method-name">

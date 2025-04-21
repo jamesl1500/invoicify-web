@@ -3,17 +3,26 @@
 import React from 'react';
 import axios from 'axios';
 
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 
 import Loading from "@/components/screens/Loading";
 
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import Link from "next/link";
+
+interface Invoice {
+    id: string;
+    invoice_number: string;
+    user: {
+        name: string;
+    };
+    status: string;
+    total_amount: number;
+}
 
 // Fetch dashboard data function
 const fetchDashboardData = async (token: string) => {
@@ -123,7 +132,7 @@ const DashboardPage = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.invoices.map((invoice: any) => (
+                                        {data.invoices.map((invoice: Invoice) => (
                                             <tr key={invoice.id}>
                                                 <td>{invoice.invoice_number}</td>
                                                 <td>{invoice.status}</td>
