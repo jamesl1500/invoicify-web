@@ -11,7 +11,7 @@ import Loading from "@/components/screens/Loading";
 import { Popconfirm } from "antd";
 import { toast } from "react-toastify";
 
-export default function ViewPaymentPage({ paymentId }: { paymentId: { invoiceId: string } }) {
+export default function ViewPaymentPage({ paymentId }: { paymentId: string }) {
     // Get the session
     const { data: session } = useSession();
 

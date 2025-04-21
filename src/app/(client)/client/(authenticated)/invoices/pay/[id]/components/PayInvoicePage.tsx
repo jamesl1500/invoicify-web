@@ -36,7 +36,7 @@ interface Props {
     onSelete: (methodId: string) => void;
 }
 
-export default function PayInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
+export default function PayInvoicePage({ invoiceId }: { invoiceId: string }) {
     const { data: session } = useSession();
 
     // Function to fetch the invoice data

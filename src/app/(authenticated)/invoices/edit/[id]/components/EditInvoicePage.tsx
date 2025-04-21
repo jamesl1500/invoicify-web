@@ -23,7 +23,7 @@ const fetchClients = async (token: string) => {
     }
 };
 
-export default function EditInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
+export default function EditInvoicePage({ invoiceId }: { invoiceId: string }) {
     const { data: session } = useSession();
 
     const [invoiceData, setInvoiceData] = useState<any>(null);

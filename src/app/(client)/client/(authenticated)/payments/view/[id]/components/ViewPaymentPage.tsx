@@ -7,7 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import Loading from "@/components/screens/Loading";
 
-export default function ViewPaymentPage({ paymentId }: { paymentId: { paymentId: string } }) {
+export default function ViewPaymentPage({ paymentId }: { paymentId: string }) {
     const { data: session } = useSession();
     const id = paymentId;
 

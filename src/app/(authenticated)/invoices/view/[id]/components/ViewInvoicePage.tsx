@@ -12,7 +12,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { Popconfirm } from "antd";
 
-export default function ViewInvoicePage({ invoiceId }: { invoiceId: { invoiceId: string } }) {
+export default function ViewInvoicePage({ invoiceId }: { invoiceId: string }) {
     const { data: session } = useSession();
 
     // Function to fetch the invoice data
