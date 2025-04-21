@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const PaymentViewPage = async (props: {params: Promise<{ id: string }>;}) => {
-    const { id } = props.params;
+    const { id } = await props.params;
 
     return <ViewPaymentPage paymentId={id} />;
 }
