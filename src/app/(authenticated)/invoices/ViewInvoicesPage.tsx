@@ -5,7 +5,18 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+interface Invoice {
+    id: string;
+    invoice_number: string;
+    client: {
+        name: string;
+    };
+    status: string;
+    total_amount: number;
+    due_date: Date;
+}
 
 export default function ViewInvoicesPage(){
     const { data: session } = useSession();
@@ -139,7 +150,7 @@ export default function ViewInvoicesPage(){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {invoices.map((invoice: any) => (
+                                            {invoices.map((invoice: Invoice) => (
                                                 <tr key={invoice.id}>
                                                     <td>{invoice.invoice_number}</td>
                                                     <td>{invoice.client.name}</td>
@@ -162,7 +173,7 @@ export default function ViewInvoicesPage(){
                                 )}
                             </div>
                             <div className="page-content-tab paid">
-                                {invoices && invoices.filter((invoice: any) => invoice.status === "paid").length > 0 ? (
+                                {invoices && invoices.filter((invoice: Invoice) => invoice.status === "paid").length > 0 ? (
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -174,7 +185,7 @@ export default function ViewInvoicesPage(){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {invoices.filter((invoice: any) => invoice.status === "paid").map((invoice: any) => (
+                                            {invoices.filter((invoice: Invoice) => invoice.status === "paid").map((invoice: Invoice) => (
                                                 <tr key={invoice.id}>
                                                     <td>{invoice.invoice_number}</td>
                                                     <td>{invoice.client.name}</td>
@@ -197,7 +208,7 @@ export default function ViewInvoicesPage(){
                                 )}
                             </div>
                             <div className="page-content-tab pending">
-                                {invoices && invoices.filter((invoice: any) => invoice.status === "pending").length > 0 ? (
+                                {invoices && invoices.filter((invoice: Invoice) => invoice.status === "pending").length > 0 ? (
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -209,7 +220,7 @@ export default function ViewInvoicesPage(){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {invoices.filter((invoice: any) => invoice.status === "pending").map((invoice: any) => (
+                                            {invoices.filter((invoice: Invoice) => invoice.status === "pending").map((invoice: Invoice) => (
                                                 <tr key={invoice.id}>
                                                     <td>{invoice.invoice_number}</td>
                                                     <td>{invoice.client.name}</td>
@@ -232,7 +243,7 @@ export default function ViewInvoicesPage(){
                                 )}
                             </div>
                             <div className="page-content-tab overdue">
-                                {invoices && invoices.filter((invoice: any) => invoice.due_date > new Date()).length > 0 ? (
+                                {invoices && invoices.filter((invoice: Invoice) => invoice.due_date > new Date()).length > 0 ? (
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -244,7 +255,7 @@ export default function ViewInvoicesPage(){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {invoices.filter((invoice: any) => invoice.status === "overdue").map((invoice: any) => (
+                                            {invoices.filter((invoice: Invoice) => invoice.status === "overdue").map((invoice: Invoice) => (
                                                 <tr key={invoice.id}>
                                                     <td>{invoice.invoice_number}</td>
                                                     <td>{invoice.client.name}</td>

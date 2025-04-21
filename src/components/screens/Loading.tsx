@@ -3,7 +3,11 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import React from 'react';
 
-export default function Loading(props) {
+interface LoadingProps {
+    text?: string;
+}
+
+export default function Loading(props: LoadingProps) {
     const { text = "Loading..." } = props;
 
     // This is the loading screen component

@@ -25,7 +25,7 @@ const logo = "/static/images/invoicify-logo.png";
 
 export default function Sidebar() {
     // Get session
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     // Determine which page is active
     const pathname = usePathname() as keyof typeof pageName;
@@ -45,7 +45,7 @@ export default function Sidebar() {
     };
 
     // Logout
-    const handleLogout = async (e) => {
+    const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {}, {

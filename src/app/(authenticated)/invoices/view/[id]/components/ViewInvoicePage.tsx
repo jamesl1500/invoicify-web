@@ -12,10 +12,31 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { Popconfirm } from "antd";
 
-export default function ViewInvoicePage(id: string) {
-    const { data: session } = useSession();
+interface InvoiceItems{
+    id: string;
+    item: string;
+    description: string;
+    quantity: number;
+    unit_price: number;
+}
 
-    const invoiceId = id.invoiceId;
+interface Notifications{
+    id: string;
+    action: string;
+    description: string;
+    created_at: string;
+}
+
+interface Payments{
+    id: string;
+    amount: number;
+    payment_date: string;
+    method: string;
+    status: string;
+}
+
+export default function ViewInvoicePage({ invoiceId }: { invoiceId: string }) {
+    const { data: session } = useSession();
 
     // Function to fetch the invoice data
     const fetchInvoice = async (invoiceId: string, token: string) => {
@@ -58,7 +79,9 @@ export default function ViewInvoicePage(id: string) {
         const clickedLink = event.currentTarget;
 
         if (clickedLink) {
-            clickedLink.parentElement.classList.add("active");
+            if (clickedLink.parentElement) {
+                clickedLink.parentElement.classList.add("active");
+            }
         }
     };
 
@@ -67,7 +90,7 @@ export default function ViewInvoicePage(id: string) {
         queryKey: ["invoice", invoiceId],
         queryFn: () => fetchInvoice(invoiceId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Invoice | undefined; error: any; isLoading: boolean };
+    });
 
     // Delete invoice function
     const deleteInvoice = async () => {
@@ -188,7 +211,7 @@ export default function ViewInvoicePage(id: string) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data.items.map((item) => (
+                                                {data.items.map((item: InvoiceItems) => (
                                                     <tr key={item.id}>
                                                         <td>{item.item}</td>
                                                         <td>{item.description}</td>
@@ -204,7 +227,7 @@ export default function ViewInvoicePage(id: string) {
                                         <h3>Notifications</h3>
                                         {data.notifications.length > 0 ? (
                                             <ul className="list-group">
-                                                {data.notifications.map((notification) => (
+                                                {data.notifications.map((notification: Notifications) => (
                                                     <li key={notification.id} className="list-group-item">
                                                         <p><strong>{new Date(notification.created_at).toLocaleDateString()}:</strong> {notification.action} - {notification.description}</p>
                                                     </li>
@@ -228,7 +251,7 @@ export default function ViewInvoicePage(id: string) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {data.payments.map((payment) => (
+                                                    {data.payments.map((payment: Payments) => (
                                                         <tr key={payment.id}>
                                                             <td>{new Date(payment.payment_date).toLocaleDateString()}</td>
                                                             <td>${payment.amount}</td>

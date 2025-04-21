@@ -36,7 +36,7 @@ export default function ViewClientsPage() {
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
-    }) as { data: { id: string; name: string }[] | undefined, error: any, isLoading: boolean };
+    });
 
     if (status === "loading" || isLoading) {
         return <Loading text="Loading your clients"/>;
@@ -62,17 +62,23 @@ export default function ViewClientsPage() {
                     <div className="page-content-inner">
                         {error && (
                             <div className="alert alert-danger">
-                                {error?.response?.status === 401 ? (
-                                    <div>
-                                        Unauthorized. Please log in again.
-                                    </div>
-                                ) : error?.response?.status === 403 ? (
-                                    <div>
-                                        Forbidden. You do not have permission to view this resource.
-                                    </div>
+                                {axios.isAxiosError(error) && error.response ? (
+                                    error.response.status === 401 ? (
+                                        <div>
+                                            Unauthorized. Please log in again.
+                                        </div>
+                                    ) : error.response.status === 403 ? (
+                                        <div>
+                                            Forbidden. You do not have permission to view this resource.
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            Error fetching clients: {error.message}
+                                        </div>
+                                    )
                                 ) : (
                                     <div>
-                                        Error fetching clients: {error.message}
+                                        An unexpected error occurred: {error.message}
                                     </div>
                                 )}
                             </div>

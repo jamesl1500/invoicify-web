@@ -3,7 +3,6 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loading from "@/components/screens/Loading";
 import { toast } from "react-toastify";
 
 export default function SettingsPage() {
@@ -34,13 +33,13 @@ export default function SettingsPage() {
     // Fetch user data using React Query
     const { data, error, isLoading } = useQuery({
         queryKey: ["clientData", session?.accessToken],
-        queryFn: () => getUserData(session?.accessToken),
+        queryFn: () => getUserData(session?.accessToken || ""),
         enabled: !!session?.accessToken,
     });
 
     const handleBasicInformationSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget as HTMLFormElement);
         const data = {
             name: formData.get("name"),
             email: formData.get("email"),
@@ -70,7 +69,7 @@ export default function SettingsPage() {
     // Update password
     const handlePasswordChange = async (event: React.FormEvent) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget as HTMLFormElement);
         const data = {
             current_password: formData.get("current_password"),
             new_password: formData.get("new_password"),

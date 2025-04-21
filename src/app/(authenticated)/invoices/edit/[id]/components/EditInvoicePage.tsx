@@ -23,10 +23,8 @@ const fetchClients = async (token: string) => {
     }
 };
 
-export default function EditInvoicePage(id: string) {
+export default function EditInvoicePage({ invoiceId }: { invoiceId: string }) {
     const { data: session } = useSession();
-
-    const invoiceId = id.invoiceId;
 
     const [invoiceData, setInvoiceData] = useState<any>(null);
     const [invoiceItems, setInvoiceItems] = useState([
@@ -66,16 +64,23 @@ export default function EditInvoicePage(id: string) {
         }
     }, [invoiceId, session]);
 
-    const { data: clients } = useQuery({
+    interface Client {
+        id: string;
+        name: string;
+    }
+
+    const { data: clients } = useQuery<{
+        clients: Client[];
+    }>({
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: { id: string; name: string }[] | undefined };
+    });
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formData = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget as HTMLFormElement);
         const clientId = formData.get("client-select");
         const invoiceNumber = formData.get("invoice-number");
         const invoiceDate = formData.get("invoice-date");
@@ -166,7 +171,7 @@ export default function EditInvoicePage(id: string) {
                                     className="form-control"
                                     defaultValue={invoiceData.clientId}
                                 >
-                                    {clients?.clients.map((client) => (
+                                    {clients?.clients.map((client: Client) => (
                                         <option key={client.id} value={client.id}>
                                             {client.name}
                                         </option>

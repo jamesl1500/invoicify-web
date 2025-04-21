@@ -7,6 +7,18 @@ import axios from "axios";
 
 import Link from "next/link";
 
+interface Payment {
+    id: string;
+    invoice: {
+        invoice_number: string;
+    };
+    user: {
+        name: string;
+    };
+    amount: number;
+    status: string;
+}
+
 export default function ViewPaymentsPage()
 {
     const { data: session } = useSession();
@@ -35,7 +47,7 @@ export default function ViewPaymentsPage()
     // Fetch client payments using React Query
     const { data: payments, error, isLoading } = useQuery({
         queryKey: ["clientPayments", session?.accessToken],
-        queryFn: () => getClientPayments(session?.accessToken),
+        queryFn: () => getClientPayments(session?.accessToken || ""),
         enabled: !!session?.accessToken,
     });
 
@@ -67,7 +79,7 @@ export default function ViewPaymentsPage()
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {payments.map((payment: any) => (
+                                    {payments.map((payment: Payment) => (
                                         <tr key={payment.id}>
                                             <td>{payment.invoice.invoice_number}</td>
                                             <td>{payment.user.name}</td>

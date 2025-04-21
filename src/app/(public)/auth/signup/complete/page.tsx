@@ -10,13 +10,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/screens/Loading";
 
-export default function ClientOnboardCompletePage({
-    searchParams,
-}: {
-    searchParams: { [key: string]: string | string[] | undefined };
-}) {
-    const { token } = searchParams;
-
+export default function ClientOnboardCompletePage() {
     const { data: session } = useSession();
 
     const { data, isLoading } = useQuery({

@@ -89,14 +89,14 @@ export default function CreateInvoicePage() {
         queryKey: ["clients"],
         queryFn: () => fetchClients(session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: { id: string; name: string }[] | undefined, error: any, isLoading: boolean };
+    });
 
     // Create invoice form submit
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         // Get the form data
-        const invoiceData = new FormData(event.currentTarget);
+        const invoiceData = new FormData(event.currentTarget as HTMLFormElement);
         const clientId = invoiceData.get("client-select");
         const invoiceNumber = invoiceData.get("invoice-number");
         const invoiceDate = invoiceData.get("invoice-date");
@@ -252,7 +252,7 @@ export default function CreateInvoicePage() {
                                                 <option value="" disabled selected>
                                                     Select a client
                                                 </option>
-                                                {clients?.clients?.map((client: { id: string; name: string }) => (
+                                                {clients?.clients?.map((client: { id: string; name: string; email: string; }) => (
                                                     <option key={client.id} value={client.id}>
                                                         {client.name} - {client.email}
                                                     </option>

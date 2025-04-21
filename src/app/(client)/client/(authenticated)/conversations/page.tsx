@@ -4,8 +4,6 @@ import React from 'react';
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Link from "next/link";
-import Loading from "@/components/screens/Loading";
 
 export default function ClientConversationsPage()
 {
@@ -35,7 +33,7 @@ export default function ClientConversationsPage()
     // Fetch client conversations using React Query
     const { data: conversations, error, isLoading } = useQuery({
         queryKey: ["clientConversations", session?.accessToken],
-        queryFn: () => getClientConversations(session?.accessToken),
+        queryFn: () => getClientConversations(session?.accessToken || ""),
         enabled: !!session?.accessToken,
     });
 

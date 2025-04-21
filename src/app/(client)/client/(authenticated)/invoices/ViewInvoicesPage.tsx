@@ -5,7 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
+
+interface Invoice {
+    id: string;
+    invoice_number: string;
+    user: {
+        name: string;
+    };
+    status: string;
+    total_amount: number;
+}
 
 export default function ViewInvoicesPage() {
     const { data: session } = useSession();
@@ -71,7 +80,7 @@ export default function ViewInvoicesPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {invoices.map((invoice: any) => (
+                                    {invoices.map((invoice: Invoice) => (
                                         <tr key={invoice.id}>
                                             <td>{invoice.invoice_number}</td>
                                             <td>{invoice.user.name}</td>

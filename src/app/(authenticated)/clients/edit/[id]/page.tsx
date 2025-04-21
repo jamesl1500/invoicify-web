@@ -6,8 +6,10 @@ export const metadata = {
     description: "Edit an existing client",
 };
 
-export default function ClientEditPage({ params }: { params: { id: string } }) {
-    const clientId = params.id;
+const ClientEditPage = async (props: {params: Promise<{ id: string }>;}) => {
+    const { id: clientId } = await props.params;
 
     return <EditClientPage clientId={clientId} />;
 }
+
+export default ClientEditPage;

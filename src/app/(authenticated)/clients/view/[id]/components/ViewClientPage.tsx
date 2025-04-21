@@ -9,6 +9,18 @@ import Link from "next/link";
 
 import Loading from "@/components/screens/Loading";
 
+type Invoice = {
+    id: string;
+    invoice_number: string;
+    created_at: string;
+};
+
+type Payment = {
+    id: string;
+    amount: number;
+    created_at: string;
+};
+
 const fetchClient = async (clientId: string, token: string) => {
     const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/clients/${clientId}`,
@@ -27,15 +39,14 @@ const fetchClient = async (clientId: string, token: string) => {
     }
 }
 
-export default function ViewClientPage(id: number) {
+export default function ViewClientPage({ clientId }: { clientId: string }) {
     const { data: session } = useSession();
-    const clientId = id.clientId;
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["client", clientId],
         queryFn: () => fetchClient(clientId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Client | undefined; error: any; isLoading: boolean };
+    });
 
     if (isLoading) {
         return <Loading text="Loading your client"/>;
@@ -74,7 +85,7 @@ export default function ViewClientPage(id: number) {
                             <h3>Invoices</h3>
                             {data?.invoices.length ? (
                                 <ul>
-                                    {data.invoices.map((invoice) => (
+                                    {data.invoices.map((invoice: Invoice) => (
                                         <li key={invoice.id}>
                                             <Link href={`/invoices/view/${invoice.id}`}>
                                                 Invoice #{invoice.invoice_number} - {new Date(invoice.created_at).toLocaleDateString()}
@@ -91,7 +102,7 @@ export default function ViewClientPage(id: number) {
                             <h3>Payments</h3>
                             {data?.payments.length ? (
                                 <ul>
-                                    {data.payments.map((payment) => (
+                                    {data.payments.map((payment: Payment) => (
                                         <li key={payment.id}>
                                             Payment of ${payment.amount} on {new Date(payment.created_at).toLocaleDateString()}
                                         </li>

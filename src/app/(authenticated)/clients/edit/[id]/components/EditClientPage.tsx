@@ -39,15 +39,17 @@ const clientSchema = z.object({
     address: z.string().min(5, "Address must be at least 5 characters."),
 });
 
-export default function EditClientPage(id: string) {
+type ClientFormData = z.infer<typeof clientSchema>;
+
+export default function EditClientPage({ clientId }: { clientId: string }) {
     const { data: session } = useSession();
-    const clientId = id.clientId;
+    //const clientId = id.clientId;
 
     const { data, error, isLoading } = useQuery({
         queryKey: ["client", clientId],
         queryFn: () => fetchClient(clientId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Client | undefined; error: any; isLoading: boolean };
+    });
 
     const submitForm = async (formData: ClientFormData) => {
         // Handle form submission logic
@@ -97,6 +99,8 @@ export default function EditClientPage(id: string) {
                 phone: data.client.phone,
                 address: data.client.address,
             });
+
+            console.log("Client data loaded:", data.client);
         }
     }, [data]);
 

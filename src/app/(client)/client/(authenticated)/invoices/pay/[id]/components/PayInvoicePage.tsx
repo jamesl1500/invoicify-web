@@ -36,10 +36,8 @@ interface Props {
     onSelete: (methodId: string) => void;
 }
 
-export default function PayInvoicePage(id: string) {
+export default function PayInvoicePage({ invoiceId }: { invoiceId: string }) {
     const { data: session } = useSession();
-
-    const invoiceId = id.invoiceId;
 
     // Function to fetch the invoice data
     const fetchInvoice = async (invoiceId: string, token: string) => {
@@ -60,7 +58,7 @@ export default function PayInvoicePage(id: string) {
         }
     };
 
-    const [cards, setCards] = useState<any[]>([]);
+    const [cards, setCards] = useState<PaymentMethod[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -129,7 +127,7 @@ export default function PayInvoicePage(id: string) {
         queryKey: ["invoice", invoiceId],
         queryFn: () => fetchInvoice(invoiceId, session?.accessToken || ""),
         enabled: !!session?.accessToken,
-    }) as { data: Invoice | undefined; error: any; isLoading: boolean };
+    });
 
     // This is the view invoice page
     if( isLoading || !session) {
@@ -186,7 +184,7 @@ export default function PayInvoicePage(id: string) {
                                             {cards.map((card) => (
                                                 <div key={card.id} className="payment-method">
                                                     <div className="payment-method-icon">
-                                                        {brandIconMap[card.brand] || brandIconMap["default"]}
+                                                        {brandIconMap[card.brand as keyof typeof brandIconMap] || brandIconMap["default"]}
                                                     </div>
                                                     <div className="payment-method-details">
                                                         <div className="payment-method-name">
