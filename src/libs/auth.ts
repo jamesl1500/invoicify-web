@@ -1,4 +1,5 @@
 import axios from "axios";
+import { signOut } from "next-auth/react";
 
 export const logout = async (token: string) => {
     try {
