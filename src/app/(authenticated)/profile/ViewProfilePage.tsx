@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+
 import { useSession } from "next-auth/react";
 
 import useUser from "@/hooks/useUser";
@@ -11,10 +10,10 @@ export default function ViewProfilePage() {
     const { data: session } = useSession();
 
     // Fetch user data using the useUser hook
-    const { user: data, isLoading, error } = useUser(session?.accessToken);
+    const { user: data, loading, error } = useUser(session?.accessToken || "");
 
     // Handle loading and error states
-    if (isLoading) {
+    if (loading) {
         return <div className="loading">Loading your profile...</div>;
     }
 

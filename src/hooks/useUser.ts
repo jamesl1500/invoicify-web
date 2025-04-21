@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 
 import API from '@/libs/api';
 
@@ -7,6 +6,11 @@ interface User {
     id: string;
     name: string;
     email: string;
+    phone_number: string;
+    company_name: string;
+    company_address: string;
+    company_phone_number: string;
+    company_email: string;
 }
 
 const useUser = (token: string) => {
