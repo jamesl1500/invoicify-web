@@ -47,7 +47,7 @@ export default function ViewPaymentsPage()
     // Fetch client payments using React Query
     const { data: payments, error, isLoading } = useQuery({
         queryKey: ["clientPayments", session?.accessToken],
-        queryFn: () => getClientPayments(session?.accessToken),
+        queryFn: () => getClientPayments(session?.accessToken || ""),
         enabled: !!session?.accessToken,
     });
 
