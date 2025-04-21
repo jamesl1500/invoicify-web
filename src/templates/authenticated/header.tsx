@@ -2,7 +2,8 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { faHome, faFileInvoice, faCog, faMoneyBill, faUser, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFileInvoice, faCog, faMoneyBill, faUser } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { usePathname } from "next/navigation";
 import React from "react";
 
