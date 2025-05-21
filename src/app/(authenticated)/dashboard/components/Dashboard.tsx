@@ -39,8 +39,30 @@ const fetchDashboardData = async (token: string) => {
     return response.data;
 };
 
+// Fetch stripe payout info
+const fetchStripePayoutInfo = async (token: string) => {
+    const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/stripe/user/account/get`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token || ""}`,
+            },
+        }
+    );
+
+    return response.data;
+};
+
 const DashboardPageClient = () => {
     const { data: session, status } = useSession();
+
+    // Get stripe info
+    const { data: stripeInfo, error: stripeError, isLoading: stripeLoading } = useQuery({
+        queryKey: ["stripeInfo"],
+        queryFn: () => fetchStripePayoutInfo(session?.accessToken || ""),
+        enabled: status === "authenticated" && !!session?.accessToken, // Wait for session to load and ensure token is available
+    });
 
     // Use React Query to fetch and manage dashboard data
     const { data, error, isLoading } = useQuery({
@@ -63,7 +85,15 @@ const DashboardPageClient = () => {
                             <p>Welcome back, {session.user.name}</p>
                         </div>
                         <div className="page-header-actions">
-                            
+                            {stripeInfo?.payouts_enabled ? (
+                                <Link href="/stripe" className="btn btn-primary">
+                                    Stripe & Payouts
+                                </Link>
+                            ) : (
+                                <Link href="/stripe" className="btn btn-primary">
+                                    Connect Stripe Account
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
